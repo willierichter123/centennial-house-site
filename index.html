@@ -8,6 +8,12 @@
       name="description"
       content="Adults-only bed and breakfast in St. Augustine, Florida with historic rooms, breakfast, and walkable access to the old city."
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
@@ -38,59 +44,281 @@
       <section class="hero" aria-label="Homepage introduction">
         <div class="hero-media" aria-hidden="true">
           <img
-            src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/96_the+real+estateographers_093-1920w.jpg"
+            src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1_the+real+estateographers_047_v2-1920w.jpg"
             alt=""
             fetchpriority="high"
             decoding="async"
           />
         </div>
-        <div class="hero-content">
-          <div>
-            <p class="eyebrow">Adults-only bed & breakfast</p>
-            <h1>A quiet historic inn in the heart of St. Augustine.</h1>
-          </div>
-          <p class="intro">
-            Eight individually styled rooms, private baths, breakfast served in the
-            morning, and the old city just outside the front door.
-          </p>
-          <div class="hero-actions">
-            <a class="secondary-link" href="/accommodations/">View Rooms</a>
-          </div>
-          <form class="booking-bar" action="https://resnexus.com/" method="get">
-            <label class="booking-field">
-              <span class="booking-label">Arrive</span>
-              <input type="date" name="arrive" autocomplete="off" />
-            </label>
-            <label class="booking-field">
-              <span class="booking-label">Depart</span>
-              <input type="date" name="depart" autocomplete="off" />
-            </label>
-            <button class="booking-submit" type="submit">Check Rates</button>
-          </form>
+          <div class="hero-content">
+            <div>
+              <p class="eyebrow">Adults-only bed & breakfast</p>
+              <h1>A quieter, more intimate way to stay in St. Augustine.</h1>
+            </div>
+            <div class="booking-bar-wrap">
+              <form class="booking-bar" action="https://resnexus.com/" method="get">
+                <label class="booking-field">
+                  <span class="booking-label">Arrive</span>
+                  <input type="date" name="arrive" autocomplete="off" />
+                </label>
+                <label class="booking-field">
+                  <span class="booking-label">Depart</span>
+                  <input type="date" name="depart" autocomplete="off" />
+                </label>
+                <button class="booking-submit" type="submit">Check Rates</button>
+              </form>
+              <div class="booking-offer" aria-live="polite">
+                <p class="booking-offer-kicker">Booking Offer</p>
+                <p class="booking-offer-copy">Add an extra night and get 30% off for that night.</p>
+              </div>
+            </div>
         </div>
       </section>
 
       <section class="content">
-        <section class="section">
+        <section class="section note-section section-note-home">
+          <div class="welcome-note">
+            <h2>Settle in, slow down, and let the stay feel distinct from the city around it.</h2>
+            <div class="welcome-note-body">
+              <p>
+                Centennial House is for guests who want St. Augustine to feel more personal from
+                the moment they arrive. The old city is nearby, breakfast becomes part of the pace
+                of the morning, and the inn is meant to feel quieter than the streets outside.
+              </p>
+              <p>
+                Whether the plan is a romantic weekend, a celebratory few days away, or simply a
+                slower stay with room to breathe, the goal is the same: more character, more calm,
+                and less of the standard hotel feeling.
+              </p>
+            </div>
+            <div class="welcome-signoff">
+              <p class="welcome-signoff-label">Warmly,</p>
+              <img
+                class="welcome-signature"
+                src="/evan-signature-transparent.png"
+                alt="Evan signature"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+          <div class="gallery-marquee" aria-label="Centennial House photo highlights">
+            <div class="gallery-track">
+              <figure class="gallery-rail-card">
+                <img
+                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/4_the+real+estateographers_001-1920w.jpg"
+                  alt="Guest room at Centennial House"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="gallery-rail-card">
+                <img
+                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/65_the+real+estateographers_062-1920w.jpg"
+                  alt="Breakfast room at Centennial House"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="gallery-rail-card">
+                <img
+                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/23_the+real+estateographers_020-1920w.jpg"
+                  alt="Historic exterior detail at Centennial House"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="gallery-rail-card">
+                <img
+                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/30_the+real+estateographers_027-1920w.jpg"
+                  alt="Bedroom detail at Centennial House"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="gallery-rail-card">
+                <img
+                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/34_the+real+estateographers_031-1920w.jpg"
+                  alt="Bathroom and room detail at Centennial House"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="gallery-rail-card" aria-hidden="true">
+                <img
+                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/4_the+real+estateographers_001-1920w.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="gallery-rail-card" aria-hidden="true">
+                <img
+                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/65_the+real+estateographers_062-1920w.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="gallery-rail-card" aria-hidden="true">
+                <img
+                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/23_the+real+estateographers_020-1920w.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="gallery-rail-card" aria-hidden="true">
+                <img
+                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/30_the+real+estateographers_027-1920w.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+              <figure class="gallery-rail-card" aria-hidden="true">
+                <img
+                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/34_the+real+estateographers_031-1920w.jpg"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section class="section room-showcase-section">
+          <div class="section-header room-showcase-header">
+            <div class="feature-copy room-showcase-copy">
+              <p class="section-kicker">Featured Rooms</p>
+              <h2>Choose the room that suits the pace and mood of your stay.</h2>
+            </div>
+            <div class="room-carousel-controls" aria-label="Room carousel controls">
+              <button class="room-carousel-button" type="button" data-room-carousel="prev" aria-label="Show previous rooms">
+                &larr;
+              </button>
+              <button class="room-carousel-button" type="button" data-room-carousel="next" aria-label="Show next rooms">
+                &rarr;
+              </button>
+            </div>
+          </div>
+          <div class="room-carousel" aria-label="Centennial House rooms">
+            <div class="room-carousel-track">
+              <article class="room-card room-carousel-card">
+                <a class="room-link" href="/accommodations/turquoise/">
+                  <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1_the+real+estateographers_047_v2-1920w.jpg" alt="Turquoise room at Centennial House" loading="lazy" decoding="async" />
+                  <div class="text-stack">
+                    <span class="room-meta">1st floor · ADA accessible</span>
+                    <h3>Turquoise</h3>
+                    <p>Bright, welcoming, and easy to settle into, with accessible features and a calmer first-floor stay.</p>
+                  </div>
+                </a>
+              </article>
+              <article class="room-card room-carousel-card">
+                <a class="room-link" href="/accommodations/lapis-lazuli/">
+                  <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/96_the+real+estateographers_093-1920w.jpg" alt="Lapis Lazuli room at Centennial House" loading="lazy" decoding="async" />
+                  <div class="text-stack">
+                    <span class="room-meta">2nd floor</span>
+                    <h3>Lapis Lazuli</h3>
+                    <p>A serene second-floor retreat with vintage travel character and a generous whirlpool tub.</p>
+                  </div>
+                </a>
+              </article>
+              <article class="room-card room-carousel-card">
+                <a class="room-link" href="/accommodations/alexandrite/">
+                  <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/4_the+real+estateographers_001-1920w.jpg" alt="Alexandrite room at Centennial House" loading="lazy" decoding="async" />
+                  <div class="text-stack">
+                    <span class="room-meta">2nd floor</span>
+                    <h3>Alexandrite</h3>
+                    <p>Cordova Street views, a four-poster king bed, and one of the more classic historic-inn moods.</p>
+                  </div>
+                </a>
+              </article>
+              <article class="room-card room-carousel-card">
+                <a class="room-link" href="/accommodations/jade/">
+                  <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/90_the+real+estateographers_087-1920w.jpg" alt="Jade room at Centennial House" loading="lazy" decoding="async" />
+                  <div class="text-stack">
+                    <span class="room-meta">2nd floor</span>
+                    <h3>Jade</h3>
+                    <p>Woodsy, warm, and quietly traditional, with the intimate scale many guests want from an inn stay.</p>
+                  </div>
+                </a>
+              </article>
+              <article class="room-card room-carousel-card">
+                <a class="room-link" href="/accommodations/morganite/">
+                  <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/57_the+real+estateographers_054-1920w.jpg" alt="Morganite room at Centennial House" loading="lazy" decoding="async" />
+                  <div class="text-stack">
+                    <span class="room-meta">2nd floor</span>
+                    <h3>Morganite</h3>
+                    <p>A more romantic room with a four-poster bed and a weekend-getaway atmosphere built in.</p>
+                  </div>
+                </a>
+              </article>
+              <article class="room-card room-carousel-card">
+                <a class="room-link" href="/accommodations/onyx/">
+                  <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/34_the+real+estateographers_031-1920w.jpg" alt="Onyx room at Centennial House" loading="lazy" decoding="async" />
+                  <div class="text-stack">
+                    <span class="room-meta">2nd floor</span>
+                    <h3>Onyx</h3>
+                    <p>Richer textures, deeper tones, and a more dramatic mood for a celebratory stay.</p>
+                  </div>
+                </a>
+              </article>
+              <article class="room-card room-carousel-card">
+                <a class="room-link" href="/accommodations/pearl/">
+                  <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/41_the+real+estateographers_038-1920w.jpg" alt="Pearl room at Centennial House" loading="lazy" decoding="async" />
+                  <div class="text-stack">
+                    <span class="room-meta">Carriage House</span>
+                    <h3>Pearl</h3>
+                    <p>The most secluded and spacious option, with its own balcony and a more private carriage-house feel.</p>
+                  </div>
+                </a>
+              </article>
+              <article class="room-card room-carousel-card">
+                <a class="room-link" href="/accommodations/citrine/">
+                  <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/30_the+real+estateographers_027-1920w.jpg" alt="Citrine room at Centennial House" loading="lazy" decoding="async" />
+                  <div class="text-stack">
+                    <span class="room-meta">1st floor</span>
+                    <h3>Citrine</h3>
+                    <p>A brighter palette and garden-inspired energy for guests who want something fresh and cheerful.</p>
+                  </div>
+                </a>
+              </article>
+              <article class="room-card room-carousel-card">
+                <a class="room-link" href="/accommodations/moonstone/">
+                  <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/40_the+real+estateographers_037-1920w.jpg" alt="Moonstone room at Centennial House" loading="lazy" decoding="async" />
+                  <div class="text-stack">
+                    <span class="room-meta">Separate from main house</span>
+                    <h3>Moonstone</h3>
+                    <p>A simpler, private retreat just apart from the main house, ideal for a quieter reset.</p>
+                  </div>
+                </a>
+              </article>
+            </div>
+          </div>
+          <div class="room-showcase-section-cta">
+            <a class="cta" href="/accommodations/">View All Accommodations</a>
+          </div>
+        </section>
+
+        <section class="section feature-section section-breakfast-home">
           <div class="feature-row">
             <div class="feature-copy">
               <p class="section-kicker">Breakfast In Style</p>
-              <h2>Breakfast is part of the stay, not an afterthought.</h2>
+              <h2>Breakfast is woven into the stay, not added on afterward.</h2>
               <p>
-                Start the morning with a freshly prepared breakfast served in a
-                setting that feels relaxed, intimate, and distinctly St.
-                Augustine.
+                Mornings begin with a freshly prepared breakfast served in a setting that feels
+                relaxed, intimate, and suited to the pace of an inn rather than a hotel.
               </p>
               <p>
-                It is one of the clearest ways Centennial House separates itself
-                from a standard hotel stay and helps guests settle into a slower
-                weekend rhythm.
+                It is one of the clearest ways Centennial House distinguishes itself and helps the
+                day start with a little more ease.
               </p>
-              <a class="cta" href="/breakfast/">Explore Breakfast</a>
             </div>
             <div class="feature-media">
               <img
-                src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/65_the+real+estateographers_062-1920w.jpg"
+                src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/23_the+real+estateographers_020-1920w.jpg"
                 alt="Dining space at Centennial House"
                 loading="lazy"
                 decoding="async"
@@ -99,11 +327,11 @@
           </div>
         </section>
 
-        <section class="section">
+        <section class="section feature-section section-location-home">
           <div class="feature-row reverse">
             <div class="feature-media">
               <img
-                src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/23_the+real+estateographers_020-1920w.jpg"
+                src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/65_the+real+estateographers_062-1920w.jpg"
                 alt="Historic exterior detail near Centennial House"
                 loading="lazy"
                 decoding="async"
@@ -111,74 +339,98 @@
             </div>
             <div class="feature-copy">
               <p class="section-kicker">Historic District Luxury</p>
-              <h2>Stay steps from the old city while keeping the inn quiet and personal.</h2>
+              <h2>Stay close to the old city without giving up the quieter side of the weekend.</h2>
               <p>
-                Adults-only hospitality, private baths, and a walkable historic
-                district address make it easy to spend more time enjoying St.
-                Augustine and less time planning around it.
+                Adults-only hospitality, private baths, and a walkable address make it easy to
+                spend more time enjoying St. Augustine and less time arranging the details around
+                it.
               </p>
               <p>
-                Walk to restaurants, shops, and landmarks, then return to a
-                property that still feels tucked away from the pace of the day.
+                Walk to restaurants, shops, and landmarks, then return to a property that still
+                feels tucked away from the pace of the day.
               </p>
             </div>
           </div>
         </section>
 
-        <section class="section">
-          <div class="section-header">
-            <p class="section-kicker">Featured Rooms</p>
-            <h2>Three room styles that set the tone for a restful stay.</h2>
-          </div>
-          <div class="room-grid room-grid-three">
-            <article class="room-card">
-              <a class="room-link" href="/accommodations/">
-                <img
-                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/4_the+real+estateographers_001-1920w.jpg"
-                  alt="Historic guest room at Centennial House"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div class="text-stack">
-                  <span class="room-meta">Room preview</span>
-                  <h3>Jade Room</h3>
-                  <p>Antique detail, private bath, and a more traditional historic-inn feel.</p>
+        <section class="section home-gallery-section">
+          <div class="home-gallery-shell">
+            <div class="home-gallery-header">
+              <div class="feature-copy home-gallery-copy">
+                <p class="section-kicker">Photo Gallery</p>
+                <h2>Find Your Moment</h2>
+              </div>
+              <a class="cta" href="/gallery/">View Gallery</a>
+            </div>
+            <div class="home-gallery-carousel" aria-label="Centennial House gallery highlights">
+              <button
+                class="home-gallery-arrow"
+                type="button"
+                data-home-gallery="prev"
+                aria-label="Show previous gallery photos"
+              >
+                <span aria-hidden="true">&larr;</span>
+              </button>
+              <div class="home-gallery-viewport">
+                <div class="home-gallery-track">
+                  <figure class="home-gallery-card" style="--gallery-card-width: 31rem">
+                    <img
+                      src="/centennial-front.jpg"
+                      alt="Front exterior of Centennial House"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                  <figure class="home-gallery-card home-gallery-card-featured" style="--gallery-card-width: 48rem">
+                    <img
+                      src="/centennial-hero.jpeg"
+                      alt="Porch and exterior view at Centennial House"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                  <figure class="home-gallery-card" style="--gallery-card-width: 31rem">
+                    <img
+                      src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/34_the+real+estateographers_031-1920w.jpg"
+                      alt="Bathroom suite at Centennial House"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                  <figure class="home-gallery-card" style="--gallery-card-width: 24.5rem">
+                    <img
+                      src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/65_the+real+estateographers_062-1920w.jpg"
+                      alt="Historic hallway at Centennial House"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                  <figure class="home-gallery-card" style="--gallery-card-width: 27rem">
+                    <img
+                      src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1_the+real+estateographers_047_v2-1920w.jpg"
+                      alt="Guest room at Centennial House"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
                 </div>
-              </a>
-            </article>
-            <article class="room-card">
-              <a class="room-link" href="/accommodations/">
-                <img
-                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/30_the+real+estateographers_027-1920w.jpg"
-                  alt="Bedroom at Centennial House"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div class="text-stack">
-                  <span class="room-meta">Room preview</span>
-                  <h3>Citrine Room</h3>
-                  <p>Brighter palette, easy access, and a softer room style for a quieter stay.</p>
-                </div>
-              </a>
-            </article>
-            <article class="room-card">
-              <a class="room-link" href="/accommodations/">
-                <img
-                  src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/34_the+real+estateographers_031-1920w.jpg"
-                  alt="Bathroom and room detail at Centennial House"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div class="text-stack">
-                  <span class="room-meta">Room preview</span>
-                  <h3>Onyx Room</h3>
-                  <p>Richer tones, more dramatic styling, and a weekend getaway feel.</p>
-                </div>
-              </a>
-            </article>
-          </div>
-          <div>
-            <a class="cta" href="/accommodations/">View All Accommodations</a>
+              </div>
+              <div class="home-gallery-dots" aria-label="Gallery slide navigation">
+                <button class="home-gallery-dot" type="button" data-home-gallery-dot="0" aria-label="Show gallery photo 1"></button>
+                <button class="home-gallery-dot" type="button" data-home-gallery-dot="1" aria-label="Show gallery photo 2"></button>
+                <button class="home-gallery-dot" type="button" data-home-gallery-dot="2" aria-label="Show gallery photo 3"></button>
+                <button class="home-gallery-dot" type="button" data-home-gallery-dot="3" aria-label="Show gallery photo 4"></button>
+                <button class="home-gallery-dot" type="button" data-home-gallery-dot="4" aria-label="Show gallery photo 5"></button>
+              </div>
+              <button
+                class="home-gallery-arrow"
+                type="button"
+                data-home-gallery="next"
+                aria-label="Show next gallery photos"
+              >
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </div>
           </div>
         </section>
       </section>
