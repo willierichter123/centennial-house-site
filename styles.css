@@ -1555,7 +1555,7 @@ h1,
     scroll-padding-inline: 1.1rem;
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-y pinch-zoom;
+    touch-action: auto;
   }
 
   .home-gallery-card,

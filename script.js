@@ -214,14 +214,6 @@ if (homeGalleryTrack) {
   const cards = Array.from(homeGalleryTrack.querySelectorAll(".home-gallery-card"));
   let activeGalleryIndex = 0;
   let galleryScrollFrame = 0;
-  let galleryTouchAxis = null;
-  let galleryTouchStartX = 0;
-  let galleryTouchStartY = 0;
-  let galleryTouchStartScrollLeft = 0;
-
-  function isMobileGalleryLayout() {
-    return window.innerWidth <= 720;
-  }
 
   function centerGalleryCard(index, behavior = "smooth") {
     const card = cards[index];
@@ -298,57 +290,6 @@ if (homeGalleryTrack) {
   homeGalleryTrack.addEventListener("scroll", handleGalleryScroll, {
     passive: true,
   });
-
-  homeGalleryTrack.addEventListener(
-    "touchstart",
-    (event) => {
-      if (!isMobileGalleryLayout() || event.touches.length !== 1) return;
-      const touch = event.touches[0];
-      galleryTouchAxis = null;
-      galleryTouchStartX = touch.clientX;
-      galleryTouchStartY = touch.clientY;
-      galleryTouchStartScrollLeft = homeGalleryTrack.scrollLeft;
-    },
-    { passive: true },
-  );
-
-  homeGalleryTrack.addEventListener(
-    "touchmove",
-    (event) => {
-      if (!isMobileGalleryLayout() || event.touches.length !== 1) return;
-      const touch = event.touches[0];
-      const deltaX = touch.clientX - galleryTouchStartX;
-      const deltaY = touch.clientY - galleryTouchStartY;
-
-      if (!galleryTouchAxis) {
-        if (Math.abs(deltaX) < 6 && Math.abs(deltaY) < 6) return;
-        galleryTouchAxis = Math.abs(deltaX) > Math.abs(deltaY) ? "x" : "y";
-      }
-
-      if (galleryTouchAxis !== "x") return;
-
-      event.preventDefault();
-      homeGalleryTrack.scrollLeft = galleryTouchStartScrollLeft - deltaX;
-    },
-    { passive: false },
-  );
-
-  homeGalleryTrack.addEventListener(
-    "touchend",
-    () => {
-      galleryTouchAxis = null;
-      syncGalleryDots(findClosestGalleryCard());
-    },
-    { passive: true },
-  );
-
-  homeGalleryTrack.addEventListener(
-    "touchcancel",
-    () => {
-      galleryTouchAxis = null;
-    },
-    { passive: true },
-  );
 
   window.addEventListener("resize", () => {
     centerGalleryCard(activeGalleryIndex, "auto");
