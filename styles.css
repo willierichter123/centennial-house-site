@@ -545,6 +545,7 @@ h1,
 
 .room-showcase-section {
   --room-showcase-inset: clamp(1.5rem, 3.6vw, 3.25rem);
+  --room-showcase-content-offset: max(0px, 50vw - 39rem);
   --room-carousel-tail: calc(18.5rem + 1rem + var(--room-showcase-inset));
   gap: clamp(1.25rem, 2.2vw, 1.9rem);
 }
@@ -1118,7 +1119,7 @@ h1,
   gap: 1rem;
   overflow-x: auto;
   padding-bottom: 0.35rem;
-  padding-left: var(--room-showcase-inset);
+  padding-left: calc(var(--room-showcase-content-offset) + var(--room-showcase-inset));
   padding-right: var(--room-carousel-tail);
   scroll-snap-type: x proximity;
   scrollbar-width: none;
@@ -1355,6 +1356,7 @@ h1,
   }
 
   .room-showcase-section {
+    --room-showcase-content-offset: 0px;
     --room-carousel-tail: 1.1rem;
   }
 
