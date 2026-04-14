@@ -1,7 +1,6 @@
 const header = document.querySelector(".site-header");
 const menuToggle = document.querySelector(".menu-toggle");
 const nav = document.querySelector(".nav-links");
-const roomCarouselTrack = document.querySelector(".room-carousel-track");
 const homeGalleryTrack = document.querySelector(".home-gallery-track");
 const homeGalleryViewport = document.querySelector(".home-gallery-viewport");
 const homeGalleryShell = document.querySelector(".home-gallery-shell");
@@ -21,6 +20,13 @@ const scrollFadeTargets = document.querySelectorAll(
     ".content .home-gallery-header h2",
     ".content .home-gallery-section .cta",
     ".content .home-gallery-card",
+    ".content .room-detail-heading .section-kicker",
+    ".content .room-detail-heading h2",
+    ".content .room-spec",
+    ".content .room-detail-summary",
+    ".content .room-detail-copy p",
+    ".content .room-detail-booking .cta",
+    ".content .room-photo-card",
     ".content .section-header h2",
     ".content .section > div > .cta",
     ".content .room-link img",
@@ -178,20 +184,27 @@ if (bookingBarWrap && bookingBar) {
   });
 }
 
-if (roomCarouselTrack) {
-  const prevButton = document.querySelector('[data-room-carousel="prev"]');
-  const nextButton = document.querySelector('[data-room-carousel="next"]');
+document.querySelectorAll(".room-carousel-track").forEach((track) => {
+  const section =
+    track.closest("[data-room-carousel-section]") ||
+    track.closest(
+      ".room-showcase-section, .room-detail-gallery-section, .more-rooms-section",
+    );
+  const prevButton = section?.querySelector('[data-room-carousel="prev"]');
+  const nextButton = section?.querySelector('[data-room-carousel="next"]');
 
   function scrollRooms(direction) {
-    const firstCard = roomCarouselTrack.querySelector(".room-carousel-card");
+    const firstCard =
+      track.querySelector(".room-carousel-card, .room-photo-card") ||
+      track.firstElementChild;
     const cardWidth = firstCard
       ? firstCard.getBoundingClientRect().width
-      : roomCarouselTrack.clientWidth * 0.8;
-    const styles = window.getComputedStyle(roomCarouselTrack);
+      : track.clientWidth * 0.8;
+    const styles = window.getComputedStyle(track);
     const gap = Number.parseFloat(styles.columnGap || styles.gap || "16");
     const distance = cardWidth + gap;
 
-    roomCarouselTrack.scrollBy({
+    track.scrollBy({
       left: direction * distance,
       behavior: "smooth",
     });
@@ -204,7 +217,7 @@ if (roomCarouselTrack) {
   nextButton?.addEventListener("click", () => {
     scrollRooms(1);
   });
-}
+});
 
 if (homeGalleryTrack) {
   const prevButton = document.querySelector('[data-home-gallery="prev"]');
