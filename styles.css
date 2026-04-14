@@ -1535,33 +1535,43 @@ h1,
     gap: 0.7rem;
   }
 
+  .home-gallery-viewport {
+    overflow: visible;
+  }
+
   .home-gallery-arrow {
     display: none;
   }
 
   .home-gallery-track {
-    grid-auto-columns: max-content;
+    grid-auto-flow: row;
+    grid-auto-columns: unset;
+    grid-template-columns: 1fr;
     gap: 0.75rem;
     padding: 0 1.1rem;
-    scroll-padding-inline: 1.1rem;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
+    scroll-snap-type: none;
+    scroll-padding-inline: 0;
+    overscroll-behavior: auto;
+    -webkit-overflow-scrolling: auto;
   }
 
   .home-gallery-card,
   .home-gallery-card-featured {
     min-height: 0;
+    width: 100%;
   }
 
   .home-gallery-card img,
   .home-gallery-card-featured img {
     height: 16rem;
-    max-width: min(84vw, 24rem);
+    width: 100%;
+    max-width: none;
+    object-fit: cover;
   }
 
   .home-gallery-dots {
-    justify-content: center;
-    padding: 0.15rem 1.1rem 0;
+    display: none;
   }
 
   .welcome-note .section-kicker {
