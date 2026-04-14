@@ -1113,6 +1113,7 @@ h1,
   max-width: none;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
+  padding-left: calc(var(--room-showcase-content-offset) + var(--room-showcase-inset));
 }
 
 .room-carousel-track {
@@ -1122,7 +1123,7 @@ h1,
   gap: 1rem;
   overflow-x: auto;
   padding-bottom: 0.35rem;
-  padding-left: calc(var(--room-showcase-content-offset) + var(--room-showcase-inset));
+  padding-left: 0;
   padding-right: var(--room-carousel-tail);
   scroll-snap-type: x proximity;
   scrollbar-width: none;
@@ -1175,7 +1176,10 @@ h1,
 .room-showcase-section .room-meta {
   display: block;
   line-height: 1.2;
-  min-height: 2.4em;
+  min-height: 0;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
 }
 
 .room-showcase-section .room-card h3 {
@@ -1356,6 +1360,7 @@ h1,
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
+    padding-left: 0;
   }
 
   .room-showcase-section {
