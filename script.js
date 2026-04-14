@@ -219,6 +219,11 @@ if (homeGalleryTrack) {
   let galleryTouchStartX = 0;
   let galleryTouchStartY = 0;
   let galleryTouchStartScrollLeft = 0;
+  let galleryTouchPendingScrollLeft = 0;
+  let galleryTouchScrollFrame = 0;
+  let galleryTouchLastX = 0;
+  let galleryTouchLastTime = 0;
+  let galleryTouchVelocity = 0;
 
   function isMobileGalleryLayout() {
     return window.innerWidth <= 720;
@@ -244,11 +249,10 @@ if (homeGalleryTrack) {
     });
   }
 
-  function findClosestGalleryCard() {
+  function findClosestGalleryCard(scrollLeft = homeGalleryTrack.scrollLeft) {
     if (!homeGalleryViewport || !cards.length) return 0;
 
-    const viewportCenter =
-      homeGalleryTrack.scrollLeft + homeGalleryViewport.clientWidth / 2;
+    const viewportCenter = scrollLeft + homeGalleryViewport.clientWidth / 2;
 
     let closestIndex = 0;
     let closestDistance = Number.POSITIVE_INFINITY;
@@ -271,6 +275,21 @@ if (homeGalleryTrack) {
     galleryScrollFrame = window.requestAnimationFrame(() => {
       syncGalleryDots(findClosestGalleryCard());
     });
+  }
+
+  function flushGalleryTouchScroll() {
+    homeGalleryTrack.scrollLeft = galleryTouchPendingScrollLeft;
+    galleryTouchScrollFrame = 0;
+  }
+
+  function settleMobileGallerySwipe() {
+    if (!isMobileGalleryLayout()) return;
+
+    const projectedScrollLeft =
+      homeGalleryTrack.scrollLeft - galleryTouchVelocity * 180;
+    const targetIndex = findClosestGalleryCard(projectedScrollLeft);
+    centerGalleryCard(targetIndex);
+    syncGalleryDots(targetIndex);
   }
 
   function scrollHomeGallery(direction) {
@@ -310,6 +329,10 @@ if (homeGalleryTrack) {
       galleryTouchStartX = touch.clientX;
       galleryTouchStartY = touch.clientY;
       galleryTouchStartScrollLeft = homeGalleryTrack.scrollLeft;
+      galleryTouchPendingScrollLeft = homeGalleryTrack.scrollLeft;
+      galleryTouchLastX = touch.clientX;
+      galleryTouchLastTime = performance.now();
+      galleryTouchVelocity = 0;
     },
     { passive: true },
   );
@@ -330,7 +353,20 @@ if (homeGalleryTrack) {
       if (galleryTouchAxis !== "x") return;
 
       event.preventDefault();
-      homeGalleryTrack.scrollLeft = galleryTouchStartScrollLeft - deltaX;
+      galleryTouchPendingScrollLeft = galleryTouchStartScrollLeft - deltaX;
+
+      const now = performance.now();
+      const deltaTime = Math.max(1, now - galleryTouchLastTime);
+      const instantVelocity = (touch.clientX - galleryTouchLastX) / deltaTime;
+      galleryTouchVelocity = galleryTouchVelocity * 0.7 + instantVelocity * 0.3;
+      galleryTouchLastX = touch.clientX;
+      galleryTouchLastTime = now;
+
+      if (!galleryTouchScrollFrame) {
+        galleryTouchScrollFrame = window.requestAnimationFrame(
+          flushGalleryTouchScroll,
+        );
+      }
     },
     { passive: false },
   );
@@ -338,6 +374,13 @@ if (homeGalleryTrack) {
   homeGalleryShell?.addEventListener(
     "touchend",
     () => {
+      if (galleryTouchScrollFrame) {
+        window.cancelAnimationFrame(galleryTouchScrollFrame);
+        flushGalleryTouchScroll();
+      }
+      if (galleryTouchAxis === "x") {
+        settleMobileGallerySwipe();
+      }
       galleryTouchAxis = null;
       syncGalleryDots(findClosestGalleryCard());
     },
@@ -347,6 +390,10 @@ if (homeGalleryTrack) {
   homeGalleryShell?.addEventListener(
     "touchcancel",
     () => {
+      if (galleryTouchScrollFrame) {
+        window.cancelAnimationFrame(galleryTouchScrollFrame);
+        galleryTouchScrollFrame = 0;
+      }
       galleryTouchAxis = null;
     },
     { passive: true },
