@@ -544,8 +544,11 @@ h1,
 }
 
 .room-showcase-section {
+  --page-content-gutter: clamp(1.5rem, 4vw, 3rem);
   --room-showcase-inset: clamp(1.5rem, 3.6vw, 3.25rem);
-  --room-showcase-content-offset: max(0px, 50vw - 39rem);
+  --room-showcase-content-offset: calc(
+    max(0px, 50vw - 39rem) + var(--page-content-gutter)
+  );
   --room-carousel-tail: calc(18.5rem + 1rem + var(--room-showcase-inset));
   gap: clamp(1.25rem, 2.2vw, 1.9rem);
 }
