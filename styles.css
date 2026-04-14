@@ -1536,7 +1536,7 @@ h1,
   }
 
   .home-gallery-viewport {
-    overflow: visible;
+    overflow: hidden;
   }
 
   .home-gallery-arrow {
@@ -1544,34 +1544,38 @@ h1,
   }
 
   .home-gallery-track {
-    grid-auto-flow: row;
-    grid-auto-columns: unset;
-    grid-template-columns: 1fr;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    grid-template-columns: none;
     gap: 0.75rem;
     padding: 0 1.1rem;
-    overflow: visible;
-    scroll-snap-type: none;
-    scroll-padding-inline: 0;
-    overscroll-behavior: auto;
-    -webkit-overflow-scrolling: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 1.1rem;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y pinch-zoom;
   }
 
   .home-gallery-card,
   .home-gallery-card-featured {
     min-height: 0;
-    width: 100%;
+    width: auto;
   }
 
   .home-gallery-card img,
   .home-gallery-card-featured img {
     height: 16rem;
-    width: 100%;
-    max-width: none;
-    object-fit: cover;
+    width: auto;
+    max-width: min(84vw, 24rem);
+    object-fit: contain;
   }
 
   .home-gallery-dots {
-    display: none;
+    display: inline-flex;
+    justify-content: center;
+    padding: 0.15rem 1.1rem 0;
   }
 
   .welcome-note .section-kicker {
