@@ -1530,6 +1530,10 @@ h1,
     justify-self: start;
   }
 
+  .home-gallery-shell {
+    touch-action: pan-y pinch-zoom;
+  }
+
   .home-gallery-carousel {
     grid-template-columns: 1fr;
     gap: 0.7rem;
@@ -1543,10 +1547,7 @@ h1,
   }
 
   .home-gallery-arrow {
-    display: inline-flex;
-    width: 2.75rem;
-    height: 2.75rem;
-    pointer-events: auto;
+    display: none;
   }
 
   .home-gallery-track {
