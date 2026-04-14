@@ -1537,10 +1537,13 @@ h1,
 
   .home-gallery-viewport {
     overflow: hidden;
+    pointer-events: none;
   }
 
   .home-gallery-arrow {
-    display: none;
+    display: inline-flex;
+    width: 2.75rem;
+    height: 2.75rem;
   }
 
   .home-gallery-track {
@@ -1553,9 +1556,9 @@ h1,
     overflow-y: hidden;
     scroll-snap-type: x proximity;
     scroll-padding-inline: 1.1rem;
-    overscroll-behavior-x: contain;
+    overscroll-behavior-x: none;
     -webkit-overflow-scrolling: touch;
-    touch-action: auto;
+    pointer-events: none;
   }
 
   .home-gallery-card,
