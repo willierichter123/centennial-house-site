@@ -1334,6 +1334,7 @@ h1,
   grid-auto-flow: column;
   grid-auto-columns: minmax(17rem, 21rem);
   gap: 1rem;
+  width: 100%;
   overflow-x: auto;
   padding-bottom: 0.35rem;
   padding-left: calc(var(--room-showcase-content-offset) + var(--room-showcase-inset));
