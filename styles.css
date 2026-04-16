@@ -405,6 +405,7 @@ h1,
   grid-template-columns: minmax(10rem, 0.62fr) minmax(0, 1.38fr);
   gap: clamp(2rem, 4vw, 5rem);
   align-items: start;
+  min-width: 0;
 }
 
 .room-detail-heading {
@@ -713,6 +714,7 @@ h1,
   position: relative;
   display: grid;
   gap: clamp(1.5rem, 2.8vw, 2.4rem);
+  min-width: 0;
 }
 
 .feature-section {
