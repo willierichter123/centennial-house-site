@@ -513,6 +513,7 @@ h1,
 .room-detail-gallery-section .room-carousel,
 .more-rooms-section .room-carousel {
   width: 100%;
+  min-width: 0;
   margin: 0;
 }
 
@@ -1334,7 +1335,7 @@ h1,
   grid-auto-flow: column;
   grid-auto-columns: minmax(17rem, 21rem);
   gap: 1rem;
-  width: 100%;
+  min-width: 0;
   overflow-x: auto;
   padding-bottom: 0.35rem;
   padding-left: calc(var(--room-showcase-content-offset) + var(--room-showcase-inset));
@@ -1753,8 +1754,23 @@ h1,
     flex-basis: min(10rem, 54vw);
   }
 
+  .room-detail-gallery-section .room-carousel,
+  .more-rooms-section .room-carousel {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .room-detail-gallery-section .room-carousel-track,
+  .more-rooms-section .room-carousel-track {
+    padding-left: 1.1rem;
+    scroll-padding-left: 1.1rem;
+  }
+
   .room-carousel-track {
     grid-auto-columns: minmax(14.5rem, 76vw);
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
   }
 
   .room-photo-track {
