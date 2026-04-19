@@ -1759,11 +1759,13 @@ h1,
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
+    overflow: hidden;
   }
 
   .room-detail-gallery-section .room-carousel-track,
   .more-rooms-section .room-carousel-track {
     padding-left: 1.1rem;
+    padding-right: 1.1rem;
     scroll-padding-left: 1.1rem;
   }
 
@@ -1771,6 +1773,7 @@ h1,
     grid-auto-columns: minmax(14.5rem, 76vw);
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
+    touch-action: pan-x;
   }
 
   .room-photo-track {
