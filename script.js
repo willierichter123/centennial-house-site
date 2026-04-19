@@ -428,3 +428,24 @@ if (homeGalleryTrack) {
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "auto";
 }
+
+const roomFilters = document.querySelectorAll("[data-room-filter]");
+const roomGrid = document.querySelector("[data-room-grid]");
+if (roomFilters.length && roomGrid) {
+  const cards = Array.from(roomGrid.querySelectorAll(".room-card"));
+  roomFilters.forEach((button) => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.roomFilter;
+      roomFilters.forEach((b) => {
+        const active = b === button;
+        b.classList.toggle("is-active", active);
+        b.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      cards.forEach((card) => {
+        const tags = (card.dataset.roomTags || "").split(/\s+/);
+        const show = filter === "all" || tags.includes(filter);
+        card.hidden = !show;
+      });
+    });
+  });
+}
