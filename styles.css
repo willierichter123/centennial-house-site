@@ -253,7 +253,7 @@ a {
 .page-hero {
   position: relative;
   width: 100%;
-  min-height: 72vh;
+  min-height: 100vh;
   margin: 0;
   padding: clamp(8rem, 16vw, 13rem)
     max(clamp(1.5rem, 4vw, 3rem), calc((100vw - 72rem) / 2 + 3rem))
@@ -265,9 +265,6 @@ a {
   overflow: hidden;
 }
 
-.hero {
-  min-height: 100vh;
-}
 
 .hero-media,
 .hero::after {
