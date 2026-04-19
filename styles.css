@@ -316,9 +316,27 @@ a {
   margin-right: auto;
 }
 
+.page-hero .eyebrow {
+  order: -1;
+  margin: 0 0 0.9rem;
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7.5vw, 6rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: none;
+  text-shadow: 0 6px 24px rgba(23, 22, 20, 0.24);
+}
+
 .page-hero h1 {
-  max-width: 22ch;
-  font-size: clamp(2.6rem, 7vw, 5.6rem);
+  max-width: 32ch;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0;
+  color: rgba(247, 245, 241, 0.94);
+  text-shadow: 0 1px 10px rgba(23, 22, 20, 0.28);
 }
 
 .page-hero .intro {
@@ -351,8 +369,7 @@ a {
   text-shadow: 0 1px 10px rgba(23, 22, 20, 0.28);
 }
 
-h1,
-.page-hero h1 {
+h1 {
   margin: 0;
   max-width: 19ch;
   font-family: var(--font-display);
@@ -405,7 +422,19 @@ h1,
 .room-page-hero h1 {
   max-width: none;
   font-size: clamp(2.4rem, 6vw, 5.4rem);
+  font-weight: 500;
   line-height: 1.02;
+  letter-spacing: -0.04em;
+  color: var(--paper);
+}
+
+.room-page-hero .eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 .room-page-hero .intro {
@@ -1630,11 +1659,20 @@ h1,
     gap: 1.15rem;
   }
 
-  h1,
-  .page-hero h1 {
+  h1 {
     max-width: none;
     font-size: clamp(1.8rem, 8vw, 2.65rem);
     line-height: 1.12;
+  }
+
+  .page-hero h1 {
+    max-width: none;
+    font-size: clamp(0.95rem, 4vw, 1.2rem);
+    line-height: 1.35;
+  }
+
+  .page-hero .eyebrow {
+    font-size: clamp(2.4rem, 11vw, 3.6rem);
   }
 
   .content {
@@ -1650,6 +1688,11 @@ h1,
 
   .room-page-hero h1 {
     font-size: clamp(2.2rem, 10vw, 3.4rem);
+    line-height: 1.02;
+  }
+
+  .room-page-hero .eyebrow {
+    font-size: 0.64rem;
   }
 
   .room-page-hero .intro {
