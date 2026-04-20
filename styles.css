@@ -228,9 +228,9 @@ a {
 
 .site-header .cta:hover,
 .site-header .cta:focus-visible {
-  color: var(--accent-deep);
+  color: var(--paper);
   background: transparent;
-  border-color: var(--accent-deep);
+  border-color: var(--paper);
 }
 
 .site-header.is-scrolled .cta,
