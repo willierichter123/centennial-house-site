@@ -7,37 +7,237 @@
     <meta name="description" content="Learn about Carriage Way Centennial House, an adults-only historic bed and breakfast in St. Augustine." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/styles.css" />
+    <style>
+      /* ── Opening quote ───────────────────────────────────────── */
+      .about-intro-quote {
+        border-left: 2px solid var(--accent-deep);
+        padding-left: clamp(1.25rem, 3vw, 2rem);
+        max-width: 38rem;
+      }
+      .about-intro-quote p {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.25rem, 2.6vw, 1.9rem);
+        font-weight: 400;
+        font-style: italic;
+        line-height: 1.4;
+        letter-spacing: -0.025em;
+        color: var(--accent-deep);
+      }
+
+      /* ── Story trail ─────────────────────────────────────────── */
+      .trail-wrap {
+        position: relative;
+        padding-left: clamp(2rem, 4vw, 3rem);
+      }
+      .trail-line {
+        position: absolute;
+        left: 0;
+        top: 8px;
+        bottom: 8px;
+        width: 1.5px;
+        background: var(--line);
+        overflow: hidden;
+      }
+      .trail-line-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0%;
+      }
+      .trail-chapter {
+        position: relative;
+        padding-bottom: clamp(2.5rem, 5vw, 4rem);
+        opacity: 0;
+        transform: translateX(18px);
+        transition: opacity 0.65s ease, transform 0.65s ease;
+      }
+      .trail-chapter:last-child {
+        padding-bottom: 0;
+      }
+      .trail-chapter.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      /* Dot on the line */
+      .trail-chapter::before {
+        content: '';
+        position: absolute;
+        left: calc(-1 * clamp(2rem, 4vw, 3rem) - 5px);
+        top: 5px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--paper);
+        border: 1.5px solid rgba(23, 22, 20, 0.2);
+        transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        box-sizing: border-box;
+      }
+      .trail-chapter.visible::before {
+        background: var(--accent-deep);
+        border-color: var(--accent-deep);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-deep) 14%, transparent);
+      }
+      .trail-chapter .section-kicker {
+        margin-bottom: 0.55rem;
+        color: color-mix(in srgb, var(--accent-deep) 50%, var(--muted));
+      }
+      .trail-chapter h2 {
+        margin: 0 0 clamp(0.75rem, 1.6vw, 1.1rem);
+        font-family: var(--font-display);
+        font-size: clamp(1.35rem, 2.6vw, 2rem);
+        font-weight: 500;
+        letter-spacing: -0.035em;
+        line-height: 1.05;
+        color: var(--accent-deep);
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 0.55s ease 0.12s, transform 0.55s ease 0.12s;
+      }
+      .trail-chapter.visible h2 {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .trail-chapter p {
+        margin: 0;
+        max-width: 42rem;
+        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 500;
+        line-height: 1.78;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 0.55s ease 0.22s, transform 0.55s ease 0.22s;
+      }
+      .trail-chapter.visible p {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ── At a glance ─────────────────────────────────────────── */
+      .glance-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .glance-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1rem;
+        background: var(--tile);
+        border: 1px solid var(--line);
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: var(--ink);
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.45s ease, transform 0.45s ease;
+      }
+      .glance-list li.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .glance-list li span:first-child {
+        font-size: 1rem;
+        line-height: 1;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .trail-chapter,
+        .trail-chapter h2,
+        .trail-chapter p,
+        .glance-list li {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+      }
+    </style>
   </head>
   <body>
     <main class="page">
       <header class="site-header"><div class="site-header-inner"><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><span></span><span></span><span></span></button><a class="mobile-wordmark" href="/" aria-label="Carriage Way Centennial House home">Centennial House</a><nav class="nav-links" id="mobile-menu" aria-label="Main navigation"><a href="/">Home</a><a class="is-current" href="/about/">About</a><a href="/accommodations/">Accommodations</a><a href="/breakfast/">Breakfast</a><a href="/things-to-do/">Things To Do</a><a href="/restaurants/">Restaurants</a><a href="/gallery/">Gallery</a><a href="/reviews/">Reviews</a><a href="/contact/">Contact</a></nav><a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book Now</a></div></header>
+
       <section class="page-hero" style="--hero-image: url('https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/4_the+real+estateographers_001-1920w.jpg');"><div><p class="eyebrow">About</p><h1>Historic district charm, quieter hospitality.</h1></div></section>
+
       <section class="content">
+
+        <!-- Opening quote -->
         <section class="section">
-          <div class="split-grid">
-            <div class="text-panel text-stack">
-              <p>The current Centennial House site positions the inn around three things that matter: walkability, room character, and breakfast. That is the right foundation.</p>
-              <p>One block from Flagler College and close to downtown landmarks, the property is set up for guests who want to park, settle in, and spend the rest of the trip on foot.</p>
+          <div class="about-intro-quote">
+            <p>Descend our porch steps and be transformed into a turn-of-the-century city dweller. Experience all the charm of St. Augustine — no car required.</p>
+          </div>
+        </section>
+
+        <!-- Story trail -->
+        <section class="section" id="story-section">
+          <div class="trail-wrap">
+            <div class="trail-line">
+              <div class="trail-line-fill" id="trail-fill" style="background: var(--accent-deep);"></div>
             </div>
-            <div class="list-panel">
-              <h3>Property basics</h3>
-              <ul>
-                <li>Adults-only stay, age 21 and over</li>
-                <li>Historic district location</li>
-                <li>Private baths in each room</li>
-                <li>Independent inn atmosphere, not a chain hotel</li>
-              </ul>
+
+            <div class="trail-chapter" id="ch1">
+              <p class="section-kicker">01 — History</p>
+              <h2>A Historic Neighborhood</h2>
+              <p>Carriage Way Centennial is several blocks away from Flagler College, formerly the Ponce de Leon Hotel, built in 1888. Walk in the footsteps of the once "rich and famous" as you enter the grand rotunda, or visit the dining hall showcasing the artistic glasswork of Louis Tiffany.</p>
+            </div>
+
+            <div class="trail-chapter" id="ch2">
+              <p class="section-kicker">02 — Explore</p>
+              <h2>Everything Within Reach</h2>
+              <p>The Bridge of Lions, the Lightner Museum, the legendary Fountain of Youth, the Castillo de San Marcos — all just a stroll away. Wander the riverfront of the Intracoastal Waterway where dolphins often appear. Browse St. George Street's galleries and shops, or discover the Spanish Quarter Village and the Oldest House.</p>
+            </div>
+
+            <div class="trail-chapter" id="ch3">
+              <p class="section-kicker">03 — Adventure</p>
+              <h2>Adventure Awaits</h2>
+              <p>With the ocean just down the road, adventure is always within reach — from surfing and boating to casting a line or climbing the iconic St. Augustine Lighthouse for breathtaking views. Several excellent golf courses are just around the corner.</p>
             </div>
           </div>
         </section>
       </section>
+
       <footer class="site-footer"><div class="site-footer-inner"><span>Carriage Way Centennial House</span><span>26 Cordova Street · St. Augustine, FL</span></div></footer>
     </main>
+
     <script src="/script.js"></script>
+    <script src="/chat-widget.js" defer></script>
+    <script>
+      const storySection = document.getElementById('story-section');
+      const fill = document.getElementById('trail-fill');
+
+      function updateTrail() {
+        const rect = storySection.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const progress = Math.max(0, Math.min(1, (vh - rect.top) / (rect.height + vh * 0.3)));
+        fill.style.height = (progress * 100) + '%';
+      }
+      window.addEventListener('scroll', updateTrail, { passive: true });
+      updateTrail();
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.trail-chapter').forEach(el => observer.observe(el));
+
+      const glanceObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.2 });
+
+      document.querySelectorAll('.glance-list li').forEach((el, i) => {
+        el.style.transitionDelay = (i * 60) + 'ms';
+        glanceObserver.observe(el);
+      });
+    </script>
   </body>
 </html>
