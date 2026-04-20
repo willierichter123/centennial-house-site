@@ -253,7 +253,7 @@ a {
 .page-hero {
   position: relative;
   width: 100%;
-  min-height: 72vh;
+  min-height: clamp(30rem, 90vh, 52rem);
   margin: 0;
   padding: clamp(8rem, 16vw, 13rem)
     max(clamp(1.5rem, 4vw, 3rem), calc((100vw - 72rem) / 2 + 3rem))
@@ -263,10 +263,6 @@ a {
   gap: 1.4rem;
   color: var(--paper);
   overflow: hidden;
-}
-
-.hero {
-  min-height: 100vh;
 }
 
 
@@ -401,7 +397,7 @@ h1 {
 }
 
 .room-page-hero {
-  min-height: 72vh;
+  min-height: clamp(30rem, 90vh, 52rem);
   padding-top: clamp(8rem, 13vw, 10.5rem);
   padding-bottom: clamp(6rem, 11vw, 8.5rem);
   align-content: center;
