@@ -401,7 +401,7 @@ h1 {
 }
 
 .room-page-hero {
-  min-height: clamp(30rem, 82vh, 46rem);
+  min-height: 72vh;
   padding-top: clamp(8rem, 13vw, 10.5rem);
   padding-bottom: clamp(6rem, 11vw, 8.5rem);
   align-content: center;
