@@ -32,6 +32,14 @@
       padding: 0;
     }
     .ch-btn:hover { background: #7a3a63; transform: scale(1.06); }
+    .ch-btn:focus-visible,
+    .ch-send:focus-visible,
+    .ch-quick-btn:focus-visible,
+    .ch-header-close:focus-visible,
+    .ch-textarea:focus-visible {
+      outline: 2px solid #5c2b4a;
+      outline-offset: 2px;
+    }
     .ch-btn svg { display: block; }
     .ch-btn .ch-btn-close { display: none; }
     .ch-btn.is-open .ch-btn-chat { display: none; }
@@ -227,7 +235,8 @@
       transition: border-color 160ms ease;
     }
     .ch-textarea::placeholder { color: rgba(23,22,20,0.4); }
-    .ch-textarea:focus { border-color: #5c2b4a; }
+    .ch-textarea:focus,
+    .ch-textarea:focus-visible { border-color: #5c2b4a; }
     .ch-send {
       width: 36px;
       height: 36px;
@@ -286,6 +295,8 @@
   const btn = document.createElement('button');
   btn.className = 'ch-btn';
   btn.setAttribute('aria-label', 'Open chat');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', 'ch-panel');
   btn.innerHTML = `
     <svg class="ch-btn-chat" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -297,8 +308,11 @@
 
   const panel = document.createElement('div');
   panel.className = 'ch-panel';
+  panel.id = 'ch-panel';
   panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-modal', 'true');
   panel.setAttribute('aria-label', 'Chat with Centennial House');
+  panel.setAttribute('aria-hidden', 'true');
   panel.innerHTML = `
     <div class="ch-header">
       <div class="ch-avatar">CH</div>
@@ -312,7 +326,7 @@
         </svg>
       </button>
     </div>
-    <div class="ch-messages" id="ch-messages"></div>
+    <div class="ch-messages" id="ch-messages" role="log" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></div>
     <div class="ch-input-area">
       <textarea class="ch-textarea" placeholder="Ask about rooms, restaurants…" rows="1" aria-label="Your message"></textarea>
       <button class="ch-send" aria-label="Send message" disabled>
@@ -336,6 +350,7 @@
   let isOpen = false;
   let isTyping = false;
   let greeted = false;
+  let lastFocusedElement = null;
 
   // ─── Helpers ──────────────────────────────────────────────────────────────
 
@@ -392,6 +407,30 @@
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
+  function getFocusableElements() {
+    return Array.from(
+      panel.querySelectorAll(
+        'button:not([disabled]), [href], textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
+    ).filter((element) => !element.hidden);
+  }
+
+  function closeChat() {
+    if (!isOpen) return;
+    isOpen = false;
+    panel.classList.remove('is-open');
+    btn.classList.remove('is-open');
+    btn.setAttribute('aria-label', 'Open chat');
+    btn.setAttribute('aria-expanded', 'false');
+    panel.setAttribute('aria-hidden', 'true');
+
+    if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+      lastFocusedElement.focus();
+    } else {
+      btn.focus();
+    }
+  }
+
   // ─── Send ─────────────────────────────────────────────────────────────────
 
   async function send(text) {
@@ -431,8 +470,11 @@
     panel.classList.toggle('is-open', isOpen);
     btn.classList.toggle('is-open', isOpen);
     btn.setAttribute('aria-label', isOpen ? 'Close chat' : 'Open chat');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
 
     if (isOpen) {
+      lastFocusedElement = document.activeElement;
       if (!greeted) {
         greeted = true;
         setTimeout(() => {
@@ -440,6 +482,8 @@
         }, 320);
       }
       setTimeout(() => textarea.focus(), 250);
+    } else if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+      lastFocusedElement.focus();
     }
   }
 
@@ -480,7 +524,33 @@
   // Close on outside click (desktop)
   document.addEventListener('pointerdown', e => {
     if (isOpen && !panel.contains(e.target) && !btn.contains(e.target)) {
-      toggleChat();
+      closeChat();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (!isOpen) return;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeChat();
+      return;
+    }
+
+    if (event.key === 'Tab') {
+      const focusableElements = getFocusableElements();
+      if (!focusableElements.length) return;
+
+      const first = focusableElements[0];
+      const last = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
   });
 })();
