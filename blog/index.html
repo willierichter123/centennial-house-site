@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stories | Carriage Way Centennial House</title>
+    <meta name="description" content="Stories, local tips, and St. Augustine highlights from Carriage Way Centennial House." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      /* ── Blog intro ───────────────────────────────────────────── */
+      .blog-intro {
+        max-width: 38rem;
+        display: grid;
+        gap: 0.75rem;
+        margin-bottom: clamp(2.5rem, 5vw, 4rem);
+      }
+      .blog-intro h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+        font-weight: 500;
+        letter-spacing: -0.035em;
+        line-height: 1.08;
+        color: var(--accent-deep);
+      }
+      .blog-intro p {
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        font-weight: 500;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      /* ── Post grid ────────────────────────────────────────────── */
+      .post-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: clamp(1.5rem, 3vw, 2.5rem);
+        row-gap: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      /* ── Post card ────────────────────────────────────────────── */
+      .post-card {
+        display: grid;
+        gap: 0;
+        text-decoration: none;
+        color: inherit;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+        padding-top: clamp(1.5rem, 3vw, 2.5rem);
+      }
+      .post-card-image {
+        overflow: hidden;
+        background: var(--tile);
+      }
+      .post-card-image img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 3 / 2;
+        object-fit: cover;
+        transition: transform 500ms ease;
+      }
+      .post-card:hover .post-card-image img { transform: scale(1.04); }
+      .post-card-body {
+        padding: 1rem 0 0;
+        display: grid;
+        gap: 0.5rem;
+      }
+      .post-card-date {
+        font-family: var(--font-body);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .post-card-title {
+        font-family: var(--font-display);
+        font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+        font-weight: 500;
+        letter-spacing: -0.025em;
+        line-height: 1.2;
+        color: var(--ink);
+        transition: color 160ms ease;
+      }
+      .post-card:hover .post-card-title { color: var(--accent-deep); }
+      .post-card-excerpt {
+        font-family: var(--font-body);
+        font-size: 0.84rem;
+        font-weight: 500;
+        line-height: 1.7;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      /* ── Load more ────────────────────────────────────────────── */
+      .blog-load-more {
+        display: flex;
+        justify-content: center;
+        padding-top: clamp(2.5rem, 5vw, 4rem);
+      }
+
+      @media (max-width: 620px) {
+        .post-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="site-header"><div class="site-header-inner"><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><span></span><span></span><span></span></button><a class="mobile-wordmark" href="/" aria-label="Carriage Way Centennial House home">Centennial House</a><nav class="nav-links" id="mobile-menu" aria-label="Main navigation"><a href="/">Home</a><a href="/about/">About</a><a href="/accommodations/">Accommodations</a><a href="/things-to-do/">Things To Do</a><a href="/restaurants/">Restaurants</a><a href="/gallery/">Gallery</a><a class="is-current" href="/blog/">Blog</a><a href="/contact/">Contact</a></nav><a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book Now</a></div></header>
+
+      <section class="page-hero" style="--hero-image: url('https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/4_the+real+estateographers_001-1920w.jpg');"><div><p class="eyebrow">Blog</p><h1>Local notes from the historic district.</h1></div></section>
+
+      <section class="content">
+        <section class="section">
+
+          <div class="post-grid">
+
+            <a class="post-card" href="#">
+              <div class="post-card-image">
+                <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/96_the+real+estateographers_093-1920w.jpg" alt="Spring porch at Centennial House" loading="lazy" />
+              </div>
+              <div class="post-card-body">
+                <span class="post-card-date">Apr 10, 2026</span>
+                <span class="post-card-title">5 Reasons Spring Is the Best Time to Visit St. Augustine</span>
+                <p class="post-card-excerpt">Warm weather, manageable crowds, and the historic district in full bloom — here's why spring is our favorite season to host guests.</p>
+              </div>
+            </a>
+
+            <a class="post-card" href="#">
+              <div class="post-card-image">
+                <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/23_the+real+estateographers_020-1920w.jpg" alt="Morning breakfast setup" loading="lazy" />
+              </div>
+              <div class="post-card-body">
+                <span class="post-card-date">Mar 22, 2026</span>
+                <span class="post-card-title">What to Expect at Breakfast: A Morning at Centennial House</span>
+                <p class="post-card-excerpt">Breakfast here is less of an amenity and more of an event. A look at what a typical morning looks like and why guests talk about it long after they leave.</p>
+              </div>
+            </a>
+
+            <a class="post-card" href="#">
+              <div class="post-card-image">
+                <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1_the+real+estateographers_047_v2-1920w.jpg" alt="Historic district exterior" loading="lazy" />
+              </div>
+              <div class="post-card-body">
+                <span class="post-card-date">Mar 5, 2026</span>
+                <span class="post-card-title">A Walking Guide to the Historic District — From Our Front Porch</span>
+                <p class="post-card-excerpt">Step off our porch and you're already in it. Here's our go-to walking route through the streets guests tend to love most.</p>
+              </div>
+            </a>
+
+            <a class="post-card" href="#">
+              <div class="post-card-image">
+                <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/41_the+real+estateographers_038-1920w.jpg" alt="Pearl Room at Centennial House" loading="lazy" />
+              </div>
+              <div class="post-card-body">
+                <span class="post-card-date">Feb 14, 2026</span>
+                <span class="post-card-title">The Castillo de San Marcos: Everything First-Time Visitors Should Know</span>
+                <p class="post-card-excerpt">The oldest masonry fort in the continental US is a short walk from our door. Here's what to expect and how to make the most of your visit.</p>
+              </div>
+            </a>
+
+            <a class="post-card" href="#">
+              <div class="post-card-image">
+                <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/90_the+real+estateographers_087-1920w.jpg" alt="Jade Room at Centennial House" loading="lazy" />
+              </div>
+              <div class="post-card-body">
+                <span class="post-card-date">Jan 30, 2026</span>
+                <span class="post-card-title">Why Couples Keep Coming Back to St. Augustine</span>
+                <p class="post-card-excerpt">There's something about this city — the cobblestones, the waterfront, the pace — that keeps couples returning year after year. We asked a few of ours why.</p>
+              </div>
+            </a>
+
+            <a class="post-card" href="#">
+              <div class="post-card-image">
+                <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/57_the+real+estateographers_054-1920w.jpg" alt="Morganite Room at Centennial House" loading="lazy" />
+              </div>
+              <div class="post-card-body">
+                <span class="post-card-date">Dec 18, 2025</span>
+                <span class="post-card-title">A Weekend Itinerary for First-Time St. Augustine Visitors</span>
+                <p class="post-card-excerpt">Two days, one carry-on, zero stress. A practical hour-by-hour itinerary built around walkability and the things guests consistently say they loved.</p>
+              </div>
+            </a>
+
+            <a class="post-card" href="#">
+              <div class="post-card-image">
+                <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/34_the+real+estateographers_031-1920w.jpg" alt="Onyx Room at Centennial House" loading="lazy" />
+              </div>
+              <div class="post-card-body">
+                <span class="post-card-date">Nov 7, 2025</span>
+                <span class="post-card-title">The History Behind 26 Cordova Street</span>
+                <p class="post-card-excerpt">Our address has changed hands, names, and purposes over the decades. Here's the story of how this building became what it is today.</p>
+              </div>
+            </a>
+
+            <a class="post-card" href="#">
+              <div class="post-card-image">
+                <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/40_the+real+estateographers_037-1920w.jpg" alt="Moonstone Room at Centennial House" loading="lazy" />
+              </div>
+              <div class="post-card-body">
+                <span class="post-card-date">Oct 3, 2025</span>
+                <span class="post-card-title">Fall in St. Augustine: A Quieter, Better Way to See the City</span>
+                <p class="post-card-excerpt">Fewer tourists, cooler mornings, and the same beautiful city. Fall might actually be the best-kept secret in St. Augustine travel.</p>
+              </div>
+            </a>
+
+            <a class="post-card" href="#">
+              <div class="post-card-image">
+                <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/30_the+real+estateographers_027-1920w.jpg" alt="Citrine Room at Centennial House" loading="lazy" />
+              </div>
+              <div class="post-card-body">
+                <span class="post-card-date">Aug 21, 2025</span>
+                <span class="post-card-title">St. Augustine Restaurants Worth the Walk</span>
+                <p class="post-card-excerpt">All of these are within walking distance. All of them have been recommended by guests or vetted by us. A short list of places that hold up.</p>
+              </div>
+            </a>
+
+            <a class="post-card" href="#">
+              <div class="post-card-image">
+                <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/65_the+real+estateographers_062-1920w.jpg" alt="Centennial House room detail" loading="lazy" />
+              </div>
+              <div class="post-card-body">
+                <span class="post-card-date">Jul 4, 2025</span>
+                <span class="post-card-title">How to Spend 48 Hours in the Nation's Oldest City</span>
+                <p class="post-card-excerpt">St. Augustine rewards slow travel. Here's a relaxed two-day plan that covers the highlights without feeling rushed.</p>
+              </div>
+            </a>
+
+          </div>
+
+          <div class="blog-load-more">
+            <button class="cta" id="load-more-btn">Load More</button>
+          </div>
+
+        </section>
+      </section>
+
+      <footer class="site-footer"><div class="site-footer-inner"><span>Carriage Way Centennial House</span><span>26 Cordova Street · St. Augustine, FL</span></div></footer>
+    </main>
+
+    <script src="/script.js"></script>
+    <script src="/chat-widget.js" defer></script>
+    <script>
+      document.getElementById('load-more-btn').addEventListener('click', function () {
+        this.textContent = 'No more posts';
+        this.disabled = true;
+        this.style.opacity = '0.45';
+        this.style.cursor = 'default';
+        this.style.transform = 'none';
+      });
+    </script>
+  </body>
+</html>

@@ -1,22 +1,338 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Gallery | Carriage Way Centennial House</title><meta name="description" content="Photo gallery for Carriage Way Centennial House." /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" /><link rel="stylesheet" href="/styles.css" /></head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery | Carriage Way Centennial House</title>
+    <meta name="description" content="Photo gallery of Carriage Way Centennial House — rooms, exterior, and property details in St. Augustine, Florida." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      /* ── Gallery grid ─────────────────────────────────────────── */
+      .photo-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+      }
+      .photo-item {
+        position: relative;
+        overflow: hidden;
+        cursor: zoom-in;
+        background: var(--tile);
+      }
+      .photo-item:focus-visible {
+        outline: 3px solid var(--accent-deep);
+        outline-offset: 0.2rem;
+      }
+      .photo-item[hidden] { display: none; }
+      .photo-item img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        transition: transform 500ms ease, opacity 350ms ease;
+        opacity: 0;
+      }
+      .photo-item img.loaded { opacity: 1; }
+      .photo-item:hover img { transform: scale(1.05); }
+      .photo-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(17,16,15,0.6) 0%, transparent 55%);
+        opacity: 0;
+        transition: opacity 260ms ease;
+        display: flex;
+        align-items: flex-end;
+        padding: 0.85rem 1rem;
+        pointer-events: none;
+      }
+      .photo-item:hover .photo-overlay { opacity: 1; }
+      .photo-item:focus-visible .photo-overlay { opacity: 1; }
+      .photo-label {
+        font-family: var(--font-body);
+        font-size: 0.63rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.9);
+        line-height: 1;
+      }
+
+      /* ── Lightbox ─────────────────────────────────────────────── */
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        z-index: 900;
+        background: rgba(14,13,12,0.97);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 220ms ease;
+      }
+      .lightbox.is-open { opacity: 1; pointer-events: all; }
+      .lightbox-stage {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem 5.5rem;
+        box-sizing: border-box;
+      }
+      .lightbox-img-wrap img {
+        max-width: 100%;
+        max-height: calc(100dvh - 8rem);
+        object-fit: contain;
+        display: block;
+        transition: opacity 180ms ease;
+      }
+      .lightbox-img-wrap img.fading { opacity: 0; }
+      .lb-btn {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: rgba(255,255,255,0.75);
+        cursor: pointer;
+        transition: border-color 150ms ease, color 150ms ease;
+        line-height: 1;
+      }
+      .lb-btn:hover { border-color: rgba(255,255,255,0.65); color: #fff; }
+      .lb-btn:focus-visible { outline: 3px solid #fff; outline-offset: 0.18rem; border-color: rgba(255,255,255,0.9); color: #fff; }
+      .lb-close { top: 1.25rem; right: 1.5rem; width: 2.75rem; height: 2.75rem; font-size: 1rem; font-weight: 300; }
+      .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); width: 2.75rem; height: 2.75rem; font-size: 0.95rem; }
+      .lb-prev { left: 1.5rem; }
+      .lb-next { right: 1.5rem; }
+      .lb-counter {
+        position: absolute;
+        top: 1.6rem; left: 50%; transform: translateX(-50%);
+        font-family: var(--font-body); font-size: 0.62rem; font-weight: 600;
+        letter-spacing: 0.12em; color: rgba(255,255,255,0.35);
+        white-space: nowrap; pointer-events: none;
+      }
+      .lb-caption {
+        position: absolute;
+        bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+        font-family: var(--font-body); font-size: 0.62rem; font-weight: 700;
+        letter-spacing: 0.12em; text-transform: uppercase;
+        color: rgba(255,255,255,0.4); white-space: nowrap; pointer-events: none;
+      }
+
+      @media (max-width: 720px) {
+        .photo-grid { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+        .lightbox-stage { padding: 3.5rem 1rem; }
+        .lb-prev, .lb-next { display: none; }
+      }
+      @media (max-width: 420px) {
+        .photo-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
   <body>
     <main class="page">
-      <header class="site-header"><div class="site-header-inner"><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><span></span><span></span><span></span></button><a class="mobile-wordmark" href="/" aria-label="Carriage Way Centennial House home">Centennial House</a><nav class="nav-links" id="mobile-menu" aria-label="Main navigation"><a href="/">Home</a><a href="/about/">About</a><a href="/accommodations/">Accommodations</a><a href="/breakfast/">Breakfast</a><a href="/things-to-do/">Things To Do</a><a href="/restaurants/">Restaurants</a><a class="is-current" href="/gallery/">Gallery</a><a href="/reviews/">Reviews</a><a href="/contact/">Contact</a></nav><a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book Now</a></div></header>
-      <section class="page-hero" style="--hero-image: url('https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/90_the+real+estateographers_087-1920w.jpg');"><div><p class="eyebrow">Gallery</p><h1>Property, rooms, and details in one visual archive.</h1></div></section>
+      <header class="site-header"><div class="site-header-inner"><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><span></span><span></span><span></span></button><a class="mobile-wordmark" href="/" aria-label="Carriage Way Centennial House home">Centennial House</a><nav class="nav-links" id="mobile-menu" aria-label="Main navigation"><a href="/">Home</a><a href="/about/">About</a><a href="/accommodations/">Accommodations</a><a href="/things-to-do/">Things To Do</a><a href="/restaurants/">Restaurants</a><a class="is-current" href="/gallery/">Gallery</a><a href="/blog/">Blog</a><a href="/contact/">Contact</a></nav><a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book Now</a></div></header>
+
+      <section class="page-hero" style="--hero-image: url('https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/96_the+real+estateographers_093-1920w.jpg');"><div><p class="eyebrow">Gallery</p><h1>The property in full detail.</h1></div></section>
+
       <section class="content">
         <section class="section">
-          <div class="gallery-grid">
-            <figure><img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/96_the+real+estateographers_093-1920w.jpg" alt="Exterior corridor view" /></figure>
-            <figure><img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/90_the+real+estateographers_087-1920w.jpg" alt="Room photo" /></figure>
-            <figure><img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/57_the+real+estateographers_054-1920w.jpg" alt="Interior detail" /></figure>
-            <figure><img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/40_the+real+estateographers_037-1920w.jpg" alt="Guest room detail" /></figure>
+
+          <div class="room-filters" role="group" aria-label="Filter photos by category">
+            <button class="room-filter is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+            <button class="room-filter" type="button" data-filter="exterior" aria-pressed="false">Exterior</button>
+            <button class="room-filter" type="button" data-filter="rooms" aria-pressed="false">Rooms</button>
+            <button class="room-filter" type="button" data-filter="details" aria-pressed="false">Details</button>
+          </div>
+
+          <div class="photo-grid" id="photo-grid">
+
+            <figure class="photo-item" data-category="exterior" data-label="Exterior Corridor" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open photo viewer for Exterior Corridor">
+              <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/96_the+real+estateographers_093-1920w.jpg" alt="Exterior corridor" loading="lazy" />
+              <div class="photo-overlay"><span class="photo-label">Exterior</span></div>
+            </figure>
+
+            <figure class="photo-item" data-category="exterior" data-label="The Property" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open photo viewer for The Property">
+              <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1_the+real+estateographers_047_v2-1920w.jpg" alt="Carriage Way Centennial House property" loading="lazy" />
+              <div class="photo-overlay"><span class="photo-label">Exterior</span></div>
+            </figure>
+
+            <figure class="photo-item" data-category="rooms" data-label="Jade Room" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open photo viewer for Jade Room">
+              <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/90_the+real+estateographers_087-1920w.jpg" alt="Jade Room" loading="lazy" />
+              <div class="photo-overlay"><span class="photo-label">Jade Room</span></div>
+            </figure>
+
+            <figure class="photo-item" data-category="rooms" data-label="Pearl Room" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open photo viewer for Pearl Room">
+              <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/41_the+real+estateographers_038-1920w.jpg" alt="Pearl Room" loading="lazy" />
+              <div class="photo-overlay"><span class="photo-label">Pearl Room</span></div>
+            </figure>
+
+            <figure class="photo-item" data-category="rooms" data-label="Moonstone Room" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open photo viewer for Moonstone Room">
+              <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/40_the+real+estateographers_037-1920w.jpg" alt="Moonstone Room" loading="lazy" />
+              <div class="photo-overlay"><span class="photo-label">Moonstone Room</span></div>
+            </figure>
+
+            <figure class="photo-item" data-category="rooms" data-label="Morganite Room" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open photo viewer for Morganite Room">
+              <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/57_the+real+estateographers_054-1920w.jpg" alt="Morganite Room" loading="lazy" />
+              <div class="photo-overlay"><span class="photo-label">Morganite Room</span></div>
+            </figure>
+
+            <figure class="photo-item" data-category="rooms" data-label="Onyx Room" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open photo viewer for Onyx Room">
+              <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/34_the+real+estateographers_031-1920w.jpg" alt="Onyx Room" loading="lazy" />
+              <div class="photo-overlay"><span class="photo-label">Onyx Room</span></div>
+            </figure>
+
+            <figure class="photo-item" data-category="rooms" data-label="Citrine Room" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open photo viewer for Citrine Room">
+              <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/30_the+real+estateographers_027-1920w.jpg" alt="Citrine Room" loading="lazy" />
+              <div class="photo-overlay"><span class="photo-label">Citrine Room</span></div>
+            </figure>
+
+            <figure class="photo-item" data-category="rooms" data-label="Alexandrite Room" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open photo viewer for Alexandrite Room">
+              <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/4_the+real+estateographers_001-1920w.jpg" alt="Alexandrite Room" loading="lazy" />
+              <div class="photo-overlay"><span class="photo-label">Alexandrite Room</span></div>
+            </figure>
+
+            <figure class="photo-item" data-category="details" data-label="In-Room Amenities" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open photo viewer for In-Room Amenities">
+              <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/23_the+real+estateographers_020-1920w.jpg" alt="In-room amenities" loading="lazy" />
+              <div class="photo-overlay"><span class="photo-label">Detail</span></div>
+            </figure>
+
+            <figure class="photo-item" data-category="details" data-label="Room Detail" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Open photo viewer for Room Detail">
+              <img src="https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/65_the+real+estateographers_062-1920w.jpg" alt="Room detail" loading="lazy" />
+              <div class="photo-overlay"><span class="photo-label">Detail</span></div>
+            </figure>
+
           </div>
         </section>
       </section>
+
       <footer class="site-footer"><div class="site-footer-inner"><span>Carriage Way Centennial House</span><span>26 Cordova Street · St. Augustine, FL</span></div></footer>
     </main>
+
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
+      <div class="lightbox-stage">
+        <span class="lb-counter" id="lb-counter"></span>
+        <div class="lightbox-img-wrap">
+          <img id="lb-img" src="" alt="" />
+        </div>
+        <span class="lb-caption" id="lb-caption"></span>
+        <button class="lb-btn lb-close" id="lb-close" aria-label="Close">&#x2715;</button>
+        <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous">&#x2190;</button>
+        <button class="lb-btn lb-next" id="lb-next" aria-label="Next">&#x2192;</button>
+      </div>
+    </div>
+
     <script src="/script.js"></script>
+    <script src="/chat-widget.js" defer></script>
+    <script>
+      // Fade-in on load
+      document.querySelectorAll('.photo-item img').forEach(img => {
+        if (img.complete) img.classList.add('loaded');
+        else img.addEventListener('load', () => img.classList.add('loaded'));
+      });
+
+      // Filter
+      const items = Array.from(document.querySelectorAll('.photo-item'));
+      const filterBtns = Array.from(document.querySelectorAll('.room-filter'));
+      let activeFilter = 'all';
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeFilter = btn.dataset.filter;
+          filterBtns.forEach(b => {
+            const isActive = b === btn;
+            b.classList.toggle('is-active', isActive);
+            b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+          });
+          items.forEach(item => {
+            item.hidden = activeFilter !== 'all' && item.dataset.category !== activeFilter;
+          });
+        });
+      });
+
+      // Lightbox
+      const lightbox = document.getElementById('lightbox');
+      const lbImg = document.getElementById('lb-img');
+      const lbCaption = document.getElementById('lb-caption');
+      const lbCounter = document.getElementById('lb-counter');
+      let current = 0;
+      let lastFocusedItem = null;
+      const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+      const visible = () => items.filter(i => !i.hidden);
+
+      function getFocusableNodes() {
+        return Array.from(lightbox.querySelectorAll(focusableSelector))
+          .filter(node => !node.hasAttribute('disabled') && !node.hidden);
+      }
+
+      function open(item) {
+        lastFocusedItem = item;
+        current = visible().indexOf(item);
+        show(current);
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        window.setTimeout(() => document.getElementById('lb-close').focus(), 0);
+      }
+
+      function close() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (lastFocusedItem) lastFocusedItem.focus();
+      }
+
+      function show(idx) {
+        const vis = visible();
+        current = (idx + vis.length) % vis.length;
+        const item = vis[current];
+        lbImg.classList.add('fading');
+        setTimeout(() => {
+          lbImg.src = item.querySelector('img').src;
+          lbImg.alt = item.querySelector('img').alt;
+          lbCaption.textContent = item.dataset.label || '';
+          lbCounter.textContent = (current + 1) + ' / ' + vis.length;
+          lbImg.classList.remove('fading');
+        }, 160);
+      }
+
+      items.forEach(item => {
+        item.addEventListener('click', () => open(item));
+        item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(item); } });
+      });
+
+      document.getElementById('lb-close').addEventListener('click', close);
+      document.getElementById('lb-prev').addEventListener('click', () => show(current - 1));
+      document.getElementById('lb-next').addEventListener('click', () => show(current + 1));
+      lightbox.addEventListener('click', e => { if (e.target === lightbox || e.target.classList.contains('lightbox-stage')) close(); });
+
+      document.addEventListener('keydown', e => {
+        if (!lightbox.classList.contains('is-open')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') show(current - 1);
+        if (e.key === 'ArrowRight') show(current + 1);
+        if (e.key === 'Tab') {
+          const focusableNodes = getFocusableNodes();
+          if (!focusableNodes.length) return;
+          const first = focusableNodes[0];
+          const last = focusableNodes[focusableNodes.length - 1];
+
+          if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      });
+    </script>
   </body>
 </html>

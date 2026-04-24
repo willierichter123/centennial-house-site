@@ -1,20 +1,359 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Contact | Carriage Way Centennial House</title><meta name="description" content="Contact Carriage Way Centennial House in St. Augustine." /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" /><link rel="stylesheet" href="/styles.css" /></head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | Carriage Way Centennial House</title>
+    <meta name="description" content="Contact Carriage Way Centennial House in St. Augustine, Florida. Address, phone, email, and answers to common questions." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      /* ── Top: info + form ────────────────────────────────────── */
+      .contact-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(2.5rem, 6vw, 6rem);
+        align-items: start;
+      }
+
+      /* ── Contact info ────────────────────────────────────────── */
+      .contact-info {
+        display: grid;
+        gap: clamp(1.5rem, 3vw, 2rem);
+      }
+      .contact-info h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        font-weight: 500;
+        letter-spacing: -0.035em;
+        line-height: 1.1;
+        color: var(--accent-deep);
+      }
+      .contact-details {
+        display: grid;
+        border-top: 1px solid var(--line);
+      }
+      .contact-item {
+        display: grid;
+        grid-template-columns: 6rem 1fr;
+        gap: 0.5rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--line);
+        align-items: baseline;
+      }
+      .contact-label {
+        font-family: var(--font-body);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding-top: 0.1rem;
+      }
+      .contact-item a,
+      .contact-item span {
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--ink);
+        line-height: 1.6;
+        text-decoration: none;
+      }
+      .contact-item a:hover { color: var(--accent-deep); text-decoration: underline; }
+      .contact-info .cta {
+        justify-self: start;
+        color: var(--paper);
+        background: var(--accent-deep);
+        border-color: var(--accent-deep);
+      }
+      .contact-info .cta:hover { color: var(--accent-deep); background: transparent; }
+
+      /* ── Contact form ────────────────────────────────────────── */
+      .contact-form-wrap {
+        display: grid;
+        gap: clamp(1rem, 2vw, 1.5rem);
+      }
+      .contact-form {
+        display: grid;
+        gap: 1rem;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .form-field {
+        display: grid;
+        gap: 0.4rem;
+      }
+      .form-field label {
+        font-family: var(--font-body);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .form-field input,
+      .form-field textarea {
+        width: 100%;
+        padding: 0.7rem 0.85rem;
+        border: 1.5px solid var(--line);
+        background: var(--paper);
+        font-family: var(--font-body);
+        font-size: 0.86rem;
+        font-weight: 500;
+        color: var(--ink);
+        outline: none;
+        transition: border-color 160ms ease;
+        box-sizing: border-box;
+        border-radius: 0;
+        -webkit-appearance: none;
+      }
+      .form-field input::placeholder,
+      .form-field textarea::placeholder { color: rgba(23,22,20,0.35); }
+      .form-field input:focus,
+      .form-field textarea:focus { border-color: var(--accent-deep); }
+      .form-field textarea { resize: vertical; min-height: 7rem; line-height: 1.6; }
+      .form-submit {
+        justify-self: start;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.75rem;
+        padding: 0.78rem 1.6rem;
+        border: 1px solid var(--accent-deep);
+        color: var(--paper);
+        background: var(--accent-deep);
+        font-family: var(--font-body);
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+      }
+      .form-submit:hover { background: transparent; color: var(--accent-deep); transform: translateY(-1px); }
+      .form-submit:disabled { opacity: 0.5; cursor: default; transform: none; }
+      .form-status {
+        font-family: var(--font-body);
+        font-size: 0.84rem;
+        font-weight: 500;
+        line-height: 1.5;
+        display: none;
+      }
+      .form-status.success { color: #2a6b4a; display: block; }
+      .form-status.error { color: #8b2a2a; display: block; }
+
+      /* ── FAQ ─────────────────────────────────────────────────── */
+      .contact-faq {
+        display: grid;
+        gap: clamp(1rem, 2vw, 1.5rem);
+      }
+      .faq-list { border-top: 1px solid var(--line); }
+      .faq-item { border-bottom: 1px solid var(--line); }
+      .faq-item summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.1rem 0;
+        font-family: var(--font-display);
+        font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        cursor: pointer;
+        list-style: none;
+        user-select: none;
+      }
+      .faq-item summary::-webkit-details-marker { display: none; }
+      .faq-item summary::after {
+        content: '+';
+        font-family: var(--font-body);
+        font-size: 1.2rem;
+        font-weight: 300;
+        color: var(--muted);
+        flex-shrink: 0;
+        transition: transform 200ms ease, color 200ms ease;
+        line-height: 1;
+      }
+      .faq-item[open] summary::after { transform: rotate(45deg); color: var(--accent-deep); }
+      .faq-item summary:hover { color: var(--accent-deep); }
+      .faq-answer {
+        padding: 0 0 1.1rem;
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: 0.86rem;
+        font-weight: 500;
+        line-height: 1.75;
+        color: var(--muted);
+        max-width: 36rem;
+      }
+
+      @media (max-width: 720px) {
+        .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+        .form-row { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
   <body>
     <main class="page">
-      <header class="site-header"><div class="site-header-inner"><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><span></span><span></span><span></span></button><a class="mobile-wordmark" href="/" aria-label="Carriage Way Centennial House home">Centennial House</a><nav class="nav-links" id="mobile-menu" aria-label="Main navigation"><a href="/">Home</a><a href="/about/">About</a><a href="/accommodations/">Accommodations</a><a href="/breakfast/">Breakfast</a><a href="/things-to-do/">Things To Do</a><a href="/restaurants/">Restaurants</a><a href="/gallery/">Gallery</a><a href="/reviews/">Reviews</a><a class="is-current" href="/contact/">Contact</a></nav><a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book Now</a></div></header>
-      <section class="page-hero" style="--hero-image: url('https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/23_the+real+estateographers_020-1920w.jpg');"><div><p class="eyebrow">Contact</p><h1>Contact and arrival details should be immediate.</h1></div></section>
+      <header class="site-header"><div class="site-header-inner"><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><span></span><span></span><span></span></button><a class="mobile-wordmark" href="/" aria-label="Carriage Way Centennial House home">Centennial House</a><nav class="nav-links" id="mobile-menu" aria-label="Main navigation"><a href="/">Home</a><a href="/about/">About</a><a href="/accommodations/">Accommodations</a><a href="/things-to-do/">Things To Do</a><a href="/restaurants/">Restaurants</a><a href="/gallery/">Gallery</a><a class="is-current" href="/contact/">Contact</a></nav><a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book Now</a></div></header>
+
+      <section class="page-hero" style="--hero-image: url('https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/23_the+real+estateographers_020-1920w.jpg');"><div><p class="eyebrow">Contact</p><h1>We're here to help you plan your stay.</h1></div></section>
+
       <section class="content">
+
+        <!-- Info + Form -->
         <section class="section">
-          <div class="split-grid">
-            <div class="contact-panel text-stack"><h3>Reach the inn</h3><p>Carriage Way Centennial House</p><p>26 Cordova Street</p><p>St. Augustine, Florida 32084</p><p>(904) 829-2467</p><p>stay@centennialhouse.com</p></div>
-            <div class="contact-panel text-stack"><h3>Booking and arrival</h3><p>The site can keep its external booking engine, but the contact page should still support practical questions about arrival time, location, and stay policies.</p></div>
+          <div class="contact-layout">
+
+            <div class="contact-form-wrap">
+              <p class="section-kicker">Send a message</p>
+              <form class="contact-form" id="contact-form" novalidate>
+                <div class="form-row">
+                  <div class="form-field">
+                    <label for="cf-name">Name</label>
+                    <input type="text" id="cf-name" name="name" placeholder="Your name" required />
+                  </div>
+                  <div class="form-field">
+                    <label for="cf-email">Email</label>
+                    <input type="email" id="cf-email" name="email" placeholder="you@example.com" required />
+                  </div>
+                </div>
+                <div class="form-field">
+                  <label for="cf-phone">Phone <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+                  <input type="tel" id="cf-phone" name="phone" placeholder="(000) 000-0000" />
+                </div>
+                <div class="form-field">
+                  <label for="cf-message">Message</label>
+                  <textarea id="cf-message" name="message" placeholder="Questions about rooms, arrival, or anything else…" required></textarea>
+                </div>
+                <button type="submit" class="form-submit" id="cf-submit">Send Message</button>
+                <p class="form-status" id="cf-status" aria-live="polite"></p>
+              </form>
+            </div>
+
+            <div class="contact-info">
+              <p class="section-kicker">Get in touch</p>
+              <h2>Carriage Way Centennial House</h2>
+              <div class="contact-details">
+                <div class="contact-item">
+                  <span class="contact-label">Address</span>
+                  <a href="https://maps.google.com/?q=26+Cordova+Street+St+Augustine+FL+32084" target="_blank" rel="noopener">26 Cordova Street<br>St. Augustine, FL 32084</a>
+                </div>
+                <div class="contact-item">
+                  <span class="contact-label">Phone</span>
+                  <a href="tel:+19048292467">(904) 829-2467</a>
+                </div>
+                <div class="contact-item">
+                  <span class="contact-label">Email</span>
+                  <a href="mailto:stay@centennialhouse.com">stay@centennialhouse.com</a>
+                </div>
+                <div class="contact-item">
+                  <span class="contact-label">Check-in</span>
+                  <span>3:00 PM – 6:00 PM</span>
+                </div>
+                <div class="contact-item">
+                  <span class="contact-label">Check-out</span>
+                  <span>By 11:00 AM</span>
+                </div>
+              </div>
+              <a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book a Room</a>
+            </div>
+
           </div>
         </section>
+
+        <!-- FAQ -->
+        <section class="section">
+          <div class="contact-faq">
+            <p class="section-kicker">Good to know</p>
+            <div class="faq-list">
+
+              <details class="faq-item">
+                <summary>Is Centennial House adults-only?</summary>
+                <p class="faq-answer">Yes. Centennial House is an adults-only property, welcoming guests 18 and older. The inn is designed for a quieter, more intimate experience.</p>
+              </details>
+
+              <details class="faq-item">
+                <summary>Is breakfast included with every stay?</summary>
+                <p class="faq-answer">Yes. A full breakfast is included with every room. It's served each morning in a relaxed setting and is one of the things guests mention most often.</p>
+              </details>
+
+              <details class="faq-item">
+                <summary>What are check-in and check-out times?</summary>
+                <p class="faq-answer">Check-in is from 3:00 PM to 6:00 PM. Check-out is by 11:00 AM. If you need to arrange a different arrival time, reach out ahead of your stay and we'll do our best to accommodate.</p>
+              </details>
+
+              <details class="faq-item">
+                <summary>Where do guests park?</summary>
+                <p class="faq-answer">Complimentary on-site parking is available for guests. The historic district is very walkable, so most guests park once and explore on foot for the duration of their stay.</p>
+              </details>
+
+              <details class="faq-item">
+                <summary>What is your cancellation policy?</summary>
+                <p class="faq-answer">Cancellation policies vary by reservation. The details will be shown at checkout through our booking system. For questions about an existing booking, call or email us directly.</p>
+              </details>
+
+              <details class="faq-item">
+                <summary>How do I make a reservation?</summary>
+                <p class="faq-answer">Reservations are made through our online booking system. You can check availability and rates at any time — just use the Book Now button anywhere on the site.</p>
+              </details>
+
+            </div>
+          </div>
+        </section>
+
       </section>
+
       <footer class="site-footer"><div class="site-footer-inner"><span>Carriage Way Centennial House</span><span>26 Cordova Street · St. Augustine, FL</span></div></footer>
     </main>
+
     <script src="/script.js"></script>
+    <script src="/chat-widget.js" defer></script>
+    <script>
+      const form = document.getElementById('contact-form');
+      const submit = document.getElementById('cf-submit');
+      const status = document.getElementById('cf-status');
+
+      form.addEventListener('submit', async e => {
+        e.preventDefault();
+        submit.disabled = true;
+        submit.textContent = 'Sending…';
+        status.className = 'form-status';
+        status.textContent = '';
+
+        const body = {
+          name: form.name.value.trim(),
+          email: form.email.value.trim(),
+          phone: form.phone.value.trim(),
+          message: form.message.value.trim()
+        };
+
+        try {
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+          const data = await res.json();
+          if (!res.ok || data.error) throw new Error(data.error || 'Something went wrong.');
+          status.textContent = 'Message sent — we'll be in touch soon.';
+          status.className = 'form-status success';
+          form.reset();
+        } catch (err) {
+          status.textContent = err.message || 'Something went wrong. Please try again or call us directly.';
+          status.className = 'form-status error';
+        } finally {
+          submit.disabled = false;
+          submit.textContent = 'Send Message';
+        }
+      });
+    </script>
   </body>
 </html>

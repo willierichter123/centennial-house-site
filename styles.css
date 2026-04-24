@@ -38,6 +38,29 @@ a {
   color: inherit;
 }
 
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 40;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--accent-deep);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transform: translateY(-140%);
+  transition: transform 160ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 3px solid var(--accent-deep);
+  outline-offset: 0.16rem;
+}
+
 .page {
   min-height: 100vh;
   display: flex;
@@ -879,7 +902,8 @@ h1 {
   background: var(--accent-deep);
   color: var(--paper);
   transform: translateY(-1px);
-  outline: none;
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 0.18rem;
 }
 
 .welcome-note {
@@ -959,10 +983,28 @@ h1 {
 
 .gallery-marquee {
   position: relative;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   width: 100%;
   align-self: stretch;
   padding: 0.15rem 0 0.35rem;
+  scrollbar-width: none;
+}
+
+.gallery-marquee::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-marquee:focus-visible,
+.home-gallery-track:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 0.22rem;
+}
+
+.gallery-marquee:hover .gallery-track,
+.gallery-marquee:focus-within .gallery-track,
+.gallery-marquee:focus-visible .gallery-track {
+  animation-play-state: paused;
 }
 
 .gallery-marquee::before,
@@ -1674,6 +1716,12 @@ h1 {
 
 .room-carousel-track::-webkit-scrollbar {
   display: none;
+}
+
+.room-carousel-track:focus-visible,
+.room-filters:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 0.22rem;
 }
 
 .room-carousel-card {
@@ -2442,9 +2490,9 @@ h1 {
     -webkit-overflow-scrolling: touch;
   }
 
-  .room-filters::-webkit-scrollbar {
-    display: none;
-  }
+.room-filters::-webkit-scrollbar {
+  display: none;
+}
 
   .room-filter {
     flex: 0 0 auto;
@@ -2488,7 +2536,8 @@ h1 {
 .room-filter:focus-visible {
   border-color: var(--accent-deep);
   color: var(--accent-deep);
-  outline: none;
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 0.18rem;
 }
 
 .room-filter.is-active {

@@ -1,6 +1,7 @@
 const header = document.querySelector(".site-header");
 const menuToggle = document.querySelector(".menu-toggle");
 const nav = document.querySelector(".nav-links");
+const pageMain = document.querySelector("main.page");
 const homeGalleryTrack = document.querySelector(".home-gallery-track");
 const homeGalleryViewport = document.querySelector(".home-gallery-viewport");
 const homeGalleryShell = document.querySelector(".home-gallery-shell");
@@ -35,6 +36,67 @@ const scrollFadeTargets = document.querySelectorAll(
     ".content .room-card p",
   ].join(", "),
 );
+
+if (pageMain) {
+  if (!pageMain.id) {
+    pageMain.id = "main-content";
+  }
+  if (!pageMain.hasAttribute("tabindex")) {
+    pageMain.setAttribute("tabindex", "-1");
+  }
+
+  if (!document.querySelector(".skip-link")) {
+    const skipLink = document.createElement("a");
+    skipLink.className = "skip-link";
+    skipLink.href = `#${pageMain.id}`;
+    skipLink.textContent = "Skip to content";
+    document.body.prepend(skipLink);
+  }
+}
+
+function makeScrollableRegion(element, label) {
+  if (!element) return;
+  if (!element.hasAttribute("tabindex")) {
+    element.setAttribute("tabindex", "0");
+  }
+  if (!element.hasAttribute("role")) {
+    element.setAttribute("role", "region");
+  }
+  if (label && !element.hasAttribute("aria-label")) {
+    element.setAttribute("aria-label", label);
+  }
+}
+
+function addHorizontalScrollKeys(element) {
+  if (!element) return;
+  element.addEventListener("keydown", (event) => {
+    const distance = Math.max(120, Math.round(element.clientWidth * 0.8));
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      element.scrollBy({ left: distance, behavior: "smooth" });
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      element.scrollBy({ left: -distance, behavior: "smooth" });
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      element.scrollTo({ left: 0, behavior: "smooth" });
+    } else if (event.key === "End") {
+      event.preventDefault();
+      element.scrollTo({ left: element.scrollWidth, behavior: "smooth" });
+    }
+  });
+}
+
+document.querySelectorAll(".room-filters").forEach((filters) => {
+  const existingLabel = filters.getAttribute("aria-label") || "Filter options";
+  const label = existingLabel.includes("Scroll horizontally")
+    ? existingLabel
+    : `${existingLabel}. Scroll horizontally to browse all filters.`;
+
+  makeScrollableRegion(filters, label);
+  addHorizontalScrollKeys(filters);
+});
 
 function syncHeader() {
   if (!header) return;
@@ -192,6 +254,14 @@ document.querySelectorAll(".room-carousel-track").forEach((track) => {
     );
   const prevButton = section?.querySelector('[data-room-carousel="prev"]');
   const nextButton = section?.querySelector('[data-room-carousel="next"]');
+  const parentLabel =
+    track.parentElement?.getAttribute("aria-label") || "Scrollable carousel";
+  const regionLabel = parentLabel.includes("Scroll horizontally")
+    ? parentLabel
+    : `${parentLabel}. Scroll horizontally to browse more items.`;
+
+  makeScrollableRegion(track, regionLabel);
+  addHorizontalScrollKeys(track);
 
   function scrollRooms(direction) {
     const firstCard =
@@ -217,6 +287,13 @@ document.querySelectorAll(".room-carousel-track").forEach((track) => {
   nextButton?.addEventListener("click", () => {
     scrollRooms(1);
   });
+});
+
+document.querySelectorAll(".ch-messages").forEach((messages) => {
+  makeScrollableRegion(
+    messages,
+    "Chat conversation history. Scroll vertically to review earlier messages.",
+  );
 });
 
 if (homeGalleryTrack) {
@@ -439,7 +516,7 @@ if (roomFilters.length && roomGrid) {
       roomFilters.forEach((b) => {
         const active = b === button;
         b.classList.toggle("is-active", active);
-        b.setAttribute("aria-selected", active ? "true" : "false");
+        b.setAttribute("aria-pressed", active ? "true" : "false");
       });
       cards.forEach((card) => {
         const tags = (card.dataset.roomTags || "").split(/\s+/);

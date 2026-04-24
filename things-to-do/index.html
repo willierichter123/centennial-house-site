@@ -1,20 +1,429 @@
 <!doctype html>
 <html lang="en">
-  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Things To Do | Carriage Way Centennial House</title><meta name="description" content="Things to do near Carriage Way Centennial House in St. Augustine." /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" /><link rel="stylesheet" href="/styles.css" /></head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Things To Do | Carriage Way Centennial House</title>
+    <meta name="description" content="Explore St. Augustine from Carriage Way Centennial House. Interactive map of historic sites, water activities, museums, and more — all within easy reach." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+      .map-section {
+        padding: clamp(3rem, 6vw, 5rem) max(clamp(1.5rem, 4vw, 3rem), calc((100vw - 72rem) / 2 + 3rem));
+        background: var(--paper);
+      }
+
+      .map-header {
+        margin-bottom: 1.75rem;
+      }
+
+      .map-header h2 {
+        font-family: var(--font-display);
+        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+        margin: 0 0 0.5rem;
+        line-height: 1.1;
+      }
+
+      .map-header p {
+        color: rgba(23, 22, 20, 0.6);
+        font-size: 1rem;
+        margin: 0;
+      }
+
+      .map-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .map-filter-btn {
+        padding: 0.45rem 1.1rem;
+        border: 1.5px solid rgba(23, 22, 20, 0.18);
+        border-radius: 2rem;
+        background: transparent;
+        font-family: var(--font-body);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(23, 22, 20, 0.55);
+        cursor: pointer;
+        transition: all 160ms ease;
+      }
+
+      .map-filter-btn:hover {
+        border-color: rgba(23, 22, 20, 0.4);
+        color: var(--ink);
+      }
+
+      .map-filter-btn.active {
+        background: var(--ink);
+        border-color: var(--ink);
+        color: var(--paper);
+      }
+
+      #attractions-map {
+        width: 100%;
+        height: 520px;
+        border-radius: 6px;
+        z-index: 0;
+        border: 1px solid rgba(23, 22, 20, 0.1);
+      }
+
+      .leaflet-popup-content-wrapper {
+        border-radius: 5px;
+        box-shadow: 0 8px 28px rgba(23, 22, 20, 0.15);
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .leaflet-popup-content {
+        margin: 0;
+      }
+
+      .leaflet-popup-close-button {
+        color: white !important;
+        font-size: 1.1rem !important;
+        padding: 6px 8px !important;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      }
+
+      .attractions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+        gap: 1.5rem;
+        margin-top: 3rem;
+      }
+
+      .attraction-card {
+        border: 1px solid rgba(23, 22, 20, 0.1);
+        border-radius: 6px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: box-shadow 220ms ease, transform 220ms ease;
+      }
+
+      .attraction-card:hover {
+        box-shadow: 0 10px 28px rgba(23, 22, 20, 0.1);
+        transform: translateY(-3px);
+      }
+
+      .attraction-card.hidden {
+        display: none;
+      }
+
+      .attraction-card-img {
+        width: 100%;
+        height: 175px;
+        object-fit: cover;
+        display: block;
+        background: rgba(23, 22, 20, 0.06);
+      }
+
+      .attraction-card-body {
+        padding: 1rem 1.2rem 1.3rem;
+      }
+
+      .card-category {
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(23, 22, 20, 0.42);
+        margin: 0 0 0.3rem;
+      }
+
+      .attraction-card-body h3 {
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin: 0 0 0.45rem;
+        line-height: 1.2;
+      }
+
+      .attraction-card-body p {
+        font-size: 0.83rem;
+        line-height: 1.6;
+        color: rgba(23, 22, 20, 0.65);
+        margin: 0;
+      }
+
+      @media (max-width: 720px) {
+        #attractions-map { height: 380px; }
+        .attractions-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
   <body>
     <main class="page">
-      <header class="site-header"><div class="site-header-inner"><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><span></span><span></span><span></span></button><a class="mobile-wordmark" href="/" aria-label="Carriage Way Centennial House home">Centennial House</a><nav class="nav-links" id="mobile-menu" aria-label="Main navigation"><a href="/">Home</a><a href="/about/">About</a><a href="/accommodations/">Accommodations</a><a href="/breakfast/">Breakfast</a><a class="is-current" href="/things-to-do/">Things To Do</a><a href="/restaurants/">Restaurants</a><a href="/gallery/">Gallery</a><a href="/reviews/">Reviews</a><a href="/contact/">Contact</a></nav><a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book Now</a></div></header>
-      <section class="page-hero" style="--hero-image: url('https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/57_the+real+estateographers_054-1920w.jpg');"><div><p class="eyebrow">Things To Do</p><h1>Use the inn site to help guests plan the whole weekend.</h1></div></section>
-      <section class="content">
-        <section class="section">
-          <div class="split-grid">
-            <div class="list-panel"><h3>Good starting points</h3><ul><li>Historic district walks</li><li>Flagler College and nearby landmarks</li><li>Museums, architecture, and downtown attractions</li><li>Relaxed wandering without needing to drive everywhere</li></ul></div>
-            <div class="text-panel text-stack"><p>What matters here is not generic tourism copy. It is useful sequencing. What can a guest do within walking distance the afternoon they arrive? What fits a rainy day? What works for a short weekend?</p><p>This page gives the site a real planning function.</p></div>
-          </div>
-        </section>
+      <header class="site-header"><div class="site-header-inner"><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><span></span><span></span><span></span></button><a class="mobile-wordmark" href="/" aria-label="Carriage Way Centennial House home">Centennial House</a><nav class="nav-links" id="mobile-menu" aria-label="Main navigation"><a href="/">Home</a><a href="/about/">About</a><a href="/accommodations/">Accommodations</a><a class="is-current" href="/things-to-do/">Things To Do</a><a href="/restaurants/">Restaurants</a><a href="/gallery/">Gallery</a><a href="/blog/">Blog</a><a href="/contact/">Contact</a></nav><a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book Now</a></div></header>
+
+      <section class="page-hero" style="--hero-image: url('/castillo-waterfront.jpg');">
+        <div>
+          <p class="eyebrow">Things To Do</p>
+          <h1>St. Augustine within easy reach.</h1>
+        </div>
       </section>
+
+      <section class="map-section">
+        <div class="map-header">
+          <h2>Explore from here</h2>
+          <p>15 things to do — all within easy reach of 26 Cordova Street.</p>
+        </div>
+
+        <div class="map-filters">
+          <button class="map-filter-btn active" data-category="all">All</button>
+          <button class="map-filter-btn" data-category="historical">Historical</button>
+          <button class="map-filter-btn" data-category="water">On the Water</button>
+          <button class="map-filter-btn" data-category="museum">Museums</button>
+          <button class="map-filter-btn" data-category="food-drink">Food &amp; Drink</button>
+          <button class="map-filter-btn" data-category="tours">Tours</button>
+        </div>
+
+        <div id="attractions-map"></div>
+
+        <div class="attractions-grid" id="attractions-grid"></div>
+      </section>
+
       <footer class="site-footer"><div class="site-footer-inner"><span>Carriage Way Centennial House</span><span>26 Cordova Street · St. Augustine, FL</span></div></footer>
     </main>
+
     <script src="/script.js"></script>
+    <script src="/chat-widget.js" defer></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      const ATTRACTIONS = [
+        {
+          name: "Castillo de San Marcos",
+          category: "historical",
+          categoryLabel: "Historical",
+          lat: 29.8975, lng: -81.3121,
+          description: "Built in 1672 by the Spanish — the oldest masonry fort in the continental US. Open for self-guided and ranger-led tours.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-1920w.png"
+        },
+        {
+          name: "Flagler College",
+          category: "historical",
+          categoryLabel: "Historical",
+          lat: 29.8892, lng: -81.3150,
+          description: "Spanish Renaissance architecture built in 1888 as the Hotel Ponce de León. Campus tours available.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-28d7a501-1920w.png"
+        },
+        {
+          name: "Kayak St Augustine",
+          category: "water",
+          categoryLabel: "On the Water",
+          lat: 29.9025, lng: -81.3063,
+          description: "Kayak tours, rentals, and paddleboarding with manatee and dolphin encounters in the Tolomato River.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-70ef0030-1920w.png"
+        },
+        {
+          name: "Lightner Museum",
+          category: "museum",
+          categoryLabel: "Museum",
+          lat: 29.8894, lng: -81.3161,
+          description: "One of the finest collections of 19th century American art, housed in the former Hotel Alcazar.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-50d8a612-1920w.png"
+        },
+        {
+          name: "Old Town Trolley Tours",
+          category: "tours",
+          categoryLabel: "Tours",
+          lat: 29.9003, lng: -81.3134,
+          description: "1–2 hour hop-on hop-off passes covering the historic district, plus ghost-themed evening tours.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-91912cf3-1920w.png"
+        },
+        {
+          name: "Fountain of Youth Archaeological Park",
+          category: "historical",
+          categoryLabel: "Historical",
+          lat: 29.9010, lng: -81.3119,
+          description: "Spanish settlement site with exhibits in a reconstructed colonial setting along the Tolomato River.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-b7cd2c62-1920w.png"
+        },
+        {
+          name: "Potter's Wax Museum",
+          category: "museum",
+          categoryLabel: "Museum",
+          lat: 29.8914, lng: -81.3140,
+          description: "Celebrity and historical wax figures with photo opportunities throughout the historic building.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-982892ae-1920w.png"
+        },
+        {
+          name: "Ripley's Believe It or Not!",
+          category: "museum",
+          categoryLabel: "Museum",
+          lat: 29.8970, lng: -81.3126,
+          description: "Oddities and wonders from around the world, housed in a 19th-century mansion on San Marco Avenue.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-abb2360f-1920w.png"
+        },
+        {
+          name: "San Sebastian Winery",
+          category: "food-drink",
+          categoryLabel: "Food & Drink",
+          lat: 29.8888, lng: -81.3228,
+          description: "Florida wine tastings Monday–Saturday with a rooftop jazz bar overlooking the city.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-4d2a2ecb-1920w.png"
+        },
+        {
+          name: "Scenic Cruise St Augustine",
+          category: "water",
+          categoryLabel: "On the Water",
+          lat: 29.8914, lng: -81.3111,
+          description: "75-minute narrated water tour covering St. Augustine's landmarks from the Matanzas Bay.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-d02a0324-1920w.png"
+        },
+        {
+          name: "Schooner Freedom",
+          category: "water",
+          categoryLabel: "On the Water",
+          lat: 29.8910, lng: -81.3113,
+          description: "Classic sailing schooner offering daytime and sunset charter sails through St. Augustine waters.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-18759433-1920w.png"
+        },
+        {
+          name: "St Augustine Alligator Farm",
+          category: "tours",
+          categoryLabel: "Tours",
+          lat: 29.8688, lng: -81.2966,
+          description: "Wildlife shows, zipline over alligator habitat, and the only zoo with all 24 crocodilian species.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-cba16376-1920w.png"
+        },
+        {
+          name: "St Augustine Distillery",
+          category: "food-drink",
+          categoryLabel: "Food & Drink",
+          lat: 29.8953, lng: -81.3175,
+          description: "Florida spirits made in the historic 1907 ice plant. Free tours and tastings daily.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-894f3932-1920w.png"
+        },
+        {
+          name: "St Augustine Pirate & Treasure Museum",
+          category: "museum",
+          categoryLabel: "Museum",
+          lat: 29.8916, lng: -81.3112,
+          description: "Authentic Golden Age piracy artifacts and interactive exhibits along the bayfront.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-a063ac02-1920w.png"
+        },
+        {
+          name: "Whetstone Chocolate Factory",
+          category: "food-drink",
+          categoryLabel: "Food & Drink",
+          lat: 29.8990, lng: -81.3063,
+          description: "Tasting tours through one of St. Augustine's most beloved chocolate factories.",
+          image: "https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/1-19b659cb-1920w.png"
+        }
+      ];
+
+      const COLORS = {
+        historical: '#7a5c3a',
+        water:      '#2a7da0',
+        museum:     '#4e7c6d',
+        'food-drink': '#a06030',
+        tours:      '#6a4a8a'
+      };
+
+      const map = L.map('attractions-map', { zoomControl: true }).setView([29.8920, -81.3135], 14);
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20
+      }).addTo(map);
+
+      const homeIcon = L.divIcon({
+        className: '',
+        html: '<div style="width:34px;height:34px;background:#5c2b4a;border-radius:50%;border:3px solid white;box-shadow:0 2px 10px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1">🏡</div>',
+        iconSize: [34, 34],
+        iconAnchor: [17, 17],
+        popupAnchor: [0, -22]
+      });
+
+      L.marker([29.8887, -81.3134], { icon: homeIcon })
+        .bindPopup('<div style="font-family:sans-serif;padding:8px 10px;min-width:160px"><strong style="font-size:0.95rem;display:block;margin-bottom:3px">Centennial House</strong><span style="font-size:0.78rem;color:#888">26 Cordova St — You are here</span></div>')
+        .addTo(map);
+
+      const markers = [];
+      const grid = document.getElementById('attractions-grid');
+
+      ATTRACTIONS.forEach(a => {
+        const color = COLORS[a.category] || '#555';
+
+        const icon = L.divIcon({
+          className: '',
+          html: `<div style="width:26px;height:26px;background:${color};border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.28)"></div>`,
+          iconSize: [26, 26],
+          iconAnchor: [13, 26],
+          popupAnchor: [0, -28]
+        });
+
+        const popup = L.popup({ maxWidth: 240, className: '' }).setContent(`
+          <div style="width:240px;font-family:sans-serif">
+            <img src="${a.image}" alt="${a.name}" style="width:100%;height:118px;object-fit:cover;display:block" onerror="this.style.display='none'">
+            <div style="padding:10px 12px 12px">
+              <p style="font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#aaa;margin:0 0 3px">${a.categoryLabel}</p>
+              <p style="font-size:0.95rem;font-weight:600;color:#171614;margin:0 0 5px;line-height:1.2">${a.name}</p>
+              <p style="font-size:0.78rem;line-height:1.5;color:#666;margin:0">${a.description}</p>
+            </div>
+          </div>
+        `);
+
+        const marker = L.marker([a.lat, a.lng], { icon }).bindPopup(popup).addTo(map);
+        marker.categoryKey = a.category;
+        markers.push(marker);
+
+        const card = document.createElement('div');
+        card.className = 'attraction-card';
+        card.dataset.category = a.category;
+        card.innerHTML = `
+          <img class="attraction-card-img" src="${a.image}" alt="${a.name}" onerror="this.style.display='none'">
+          <div class="attraction-card-body">
+            <p class="card-category">${a.categoryLabel}</p>
+            <h3>${a.name}</h3>
+            <p>${a.description}</p>
+          </div>
+        `;
+        card.addEventListener('click', () => {
+          map.setView([a.lat, a.lng], 16, { animate: true });
+          marker.openPopup();
+          document.getElementById('attractions-map').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+        grid.appendChild(card);
+      });
+
+      document.querySelectorAll('.map-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cat = btn.dataset.category;
+          document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          markers.forEach(m => {
+            if (cat === 'all' || m.categoryKey === cat) {
+              if (!map.hasLayer(m)) map.addLayer(m);
+            } else {
+              if (map.hasLayer(m)) map.removeLayer(m);
+              m.closePopup();
+            }
+          });
+
+          document.querySelectorAll('.attraction-card').forEach(c => {
+            c.classList.toggle('hidden', cat !== 'all' && c.dataset.category !== cat);
+          });
+
+          if (cat === 'all') {
+            map.setView([29.8920, -81.3135], 14, { animate: true });
+          }
+        });
+      });
+    </script>
   </body>
 </html>

@@ -15,6 +15,44 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles.css" />
+    <style>
+      /* ── Homepage room showcase — larger, editorial feel ──────── */
+      @media (min-width: 721px) {
+        .room-showcase-section .room-carousel-track {
+          grid-auto-columns: minmax(34rem, 40rem);
+          gap: 1.5rem;
+        }
+        .room-showcase-section .room-card {
+          border: none;
+          background: transparent;
+          padding: 0;
+          gap: 1.1rem;
+        }
+        .room-showcase-section .room-card img {
+          aspect-ratio: 3 / 2;
+        }
+        .room-showcase-section .room-card .text-stack {
+          grid-template-rows: auto auto 1fr;
+          gap: 0.6rem;
+          padding: 0 0.25rem;
+        }
+        .room-showcase-section .room-card h3 {
+          font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+          min-height: unset;
+          letter-spacing: -0.035em;
+          line-height: 1.05;
+        }
+        .room-showcase-section .room-card p {
+          min-height: unset;
+          font-size: 0.88rem;
+          line-height: 1.7;
+          color: var(--muted);
+        }
+        .room-showcase-section .room-meta {
+          white-space: normal;
+        }
+      }
+    </style>
   </head>
   <body>
     <main class="page">
@@ -30,12 +68,12 @@
             <a class="is-current" href="/">Home</a>
             <a href="/about/">About</a>
             <a href="/accommodations/">Accommodations</a>
-            <a href="/breakfast/">Breakfast</a>
+            
             <a href="/things-to-do/">Things To Do</a>
             <a href="/restaurants/">Restaurants</a>
             <a href="/gallery/">Gallery</a>
-            <a href="/reviews/">Reviews</a>
-            <a href="/contact/">Contact</a>
+            
+            <a href="/blog/">Blog</a><a href="/contact/">Contact</a>
           </nav>
           <a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book Now</a>
         </div>
@@ -102,7 +140,12 @@
               />
             </div>
           </div>
-          <div class="gallery-marquee" aria-label="Centennial House photo highlights">
+          <div
+            class="gallery-marquee"
+            tabindex="0"
+            role="region"
+            aria-label="Centennial House photo highlights. Scroll horizontally to browse more photos."
+          >
             <div class="gallery-track">
               <figure class="gallery-rail-card">
                 <img
@@ -408,7 +451,12 @@
                 <span aria-hidden="true">&larr;</span>
               </button>
               <div class="home-gallery-viewport">
-                <div class="home-gallery-track">
+                <div
+                  class="home-gallery-track"
+                  tabindex="0"
+                  role="region"
+                  aria-label="Centennial House gallery carousel. Scroll horizontally to browse photos."
+                >
                   <figure class="home-gallery-card" style="--gallery-card-width: 31rem">
                     <img
                       src="/centennial-front.jpg"
@@ -479,5 +527,6 @@
       </footer>
     </main>
     <script src="/script.js"></script>
+    <script src="/chat-widget.js" defer></script>
   </body>
 </html>

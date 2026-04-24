@@ -117,45 +117,10 @@
         transform: translateY(0);
       }
 
-      /* ── At a glance ─────────────────────────────────────────── */
-      .glance-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.65rem;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-      .glance-list li {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.6rem 1rem;
-        background: var(--tile);
-        border: 1px solid var(--line);
-        font-family: var(--font-body);
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        color: var(--ink);
-        opacity: 0;
-        transform: translateY(10px);
-        transition: opacity 0.45s ease, transform 0.45s ease;
-      }
-      .glance-list li.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .glance-list li span:first-child {
-        font-size: 1rem;
-        line-height: 1;
-      }
-
       @media (prefers-reduced-motion: reduce) {
         .trail-chapter,
         .trail-chapter h2,
-        .trail-chapter p,
-        .glance-list li {
+        .trail-chapter p {
           opacity: 1;
           transform: none;
           transition: none;
@@ -165,7 +130,7 @@
   </head>
   <body>
     <main class="page">
-      <header class="site-header"><div class="site-header-inner"><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><span></span><span></span><span></span></button><a class="mobile-wordmark" href="/" aria-label="Carriage Way Centennial House home">Centennial House</a><nav class="nav-links" id="mobile-menu" aria-label="Main navigation"><a href="/">Home</a><a class="is-current" href="/about/">About</a><a href="/accommodations/">Accommodations</a><a href="/breakfast/">Breakfast</a><a href="/things-to-do/">Things To Do</a><a href="/restaurants/">Restaurants</a><a href="/gallery/">Gallery</a><a href="/reviews/">Reviews</a><a href="/contact/">Contact</a></nav><a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book Now</a></div></header>
+      <header class="site-header"><div class="site-header-inner"><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><span></span><span></span><span></span></button><a class="mobile-wordmark" href="/" aria-label="Carriage Way Centennial House home">Centennial House</a><nav class="nav-links" id="mobile-menu" aria-label="Main navigation"><a href="/">Home</a><a class="is-current" href="/about/">About</a><a href="/accommodations/">Accommodations</a><a href="/things-to-do/">Things To Do</a><a href="/restaurants/">Restaurants</a><a href="/gallery/">Gallery</a><a href="/blog/">Blog</a><a href="/contact/">Contact</a></nav><a class="cta" href="https://resnexus.com/" target="_blank" rel="noopener noreferrer">Book Now</a></div></header>
 
       <section class="page-hero" style="--hero-image: url('https://lirp.cdn-website.com/f84a8c46/dms3rep/multi/opt/4_the+real+estateographers_001-1920w.jpg');"><div><p class="eyebrow">About</p><h1>Historic district charm, quieter hospitality.</h1></div></section>
 
@@ -230,14 +195,6 @@
 
       document.querySelectorAll('.trail-chapter').forEach(el => observer.observe(el));
 
-      const glanceObserver = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-      }, { threshold: 0.2 });
-
-      document.querySelectorAll('.glance-list li').forEach((el, i) => {
-        el.style.transitionDelay = (i * 60) + 'ms';
-        glanceObserver.observe(el);
-      });
     </script>
   </body>
 </html>
